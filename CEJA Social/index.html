@@ -8,49 +8,99 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .login-container { background: #ffffff; width: 100%; max-width: 400px; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); text-align: center; display: block; }
-        .logo-icon { font-size: 70px; color: #3f51b5; margin-bottom: 10px; }
-        h1 { color: #3f51b5; font-size: 28px; font-weight: 700; margin-bottom: 6px; }
-        p.subtitle { color: #64748b; font-size: 14px; margin-bottom: 35px; }
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #cbd5e1;
+            --primary: #3f51b5;
+            --primary-hover: #303f9f;
+            --bg-input: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border-color: #334155;
+            --primary: #818cf8;
+            --primary-hover: #4f46e5;
+            --bg-input: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background-color 0.2s, border-color 0.2s; }
+        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        
+        .login-container { background: var(--bg-card); width: 100%; max-width: 400px; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); text-align: center; display: block; }
+        .logo-icon { font-size: 70px; color: var(--primary); margin-bottom: 10px; }
+        h1 { color: var(--primary); font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        p.subtitle { color: var(--text-sub); font-size: 14px; margin-bottom: 35px; }
+        
         .input-group { position: relative; margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-size: 13px; font-weight: 500; color: #475569; margin-bottom: 6px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
         .input-wrapper { position: relative; }
         .input-wrapper span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 20px; }
-        .input-wrapper input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; }
-        .btn-primary { width: 100%; padding: 14px; background-color: #3f51b5; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .btn-primary:hover { background-color: #303f9f; }
-        .btn-secondary { background: none; border: none; color: #3f51b5; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 25px; }
+        .input-wrapper input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 15px; outline: none; }
+        
+        .btn-primary { width: 100%; padding: 14px; background-color: var(--primary); color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background: none; border: none; color: var(--primary); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 25px; }
         .btn-secondary:hover { text-decoration: underline; }
+        
         .feed-container { width: 100%; max-width: 600px; display: none; flex-direction: column; gap: 20px; align-self: flex-start; }
-        .feed-header { background: #ffffff; padding: 16px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; }
-        .feed-header h2 { color: #3f51b5; font-size: 22px; font-weight: 700; }
+        .feed-header { background: var(--bg-card); padding: 16px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; }
+        .feed-header h2 { color: var(--primary); font-size: 22px; font-weight: 700; }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .icon-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; font-size: 24px; display: flex; align-items: center; }
+        .icon-btn:hover { color: var(--primary); }
         .btn-logout { background: none; border: none; color: #ef4444; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 500; }
-        .create-box { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; }
-        .create-box textarea { width: 100%; min-height: 70px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; resize: none; font-size: 15px; outline: none; }
-        .create-box input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; outline: none; }
+        
+        .create-box { background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; }
+        .create-box textarea { width: 100%; min-height: 70px; padding: 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; resize: none; font-size: 15px; outline: none; }
+        .create-box input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 13px; outline: none; }
+        .file-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-top: 4px; }
+        
         .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
-        .tab-btn { background: #f1f5f9; border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: #475569; }
-        .tab-btn.active { background: #3f51b5; color: white; }
+        .tab-btn { background: var(--bg-body); border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: var(--text-sub); }
+        .tab-btn.active { background: var(--primary); color: white; }
+        
         .posts-list { display: flex; flex-direction: column; gap: 16px; }
-        .post-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; position: relative; }
-        .post-author { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #1e293b; font-size: 15px; }
-        .post-author span.avatar { background: #e2e8f0; color: #475569; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
-        .post-content { color: #334155; font-size: 15px; line-height: 1.5; }
+        .post-card { background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .post-author { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-main); font-size: 15px; }
+        .post-author img.avatar-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .post-author span.avatar { background: var(--border-color); color: var(--text-sub); width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
+        .author-info { display: flex; flex-direction: column; }
+        .author-desc { font-size: 11px; color: var(--text-sub); font-weight: 400; }
+        .post-content { color: var(--text-main); font-size: 15px; line-height: 1.5; }
         .post-image { width: 100%; max-height: 380px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: block; }
-        .post-actions { border-top: 1px solid #f1f5f9; padding-top: 10px; display: flex; gap: 20px; justify-content: space-between; align-items: center; }
-        .action-group { display: flex; gap: 20px; }
-        .action-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
-        .action-btn:hover { color: #3f51b5; }
+        
+        .post-actions { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; gap: 20px; justify-content: space-between; align-items: center; }
+        .action-group { display: flex; gap: 16px; }
+        .action-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
+        .action-btn:hover { color: var(--primary); }
+        
         .btn-moderador { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-        .btn-moderador:hover { background: #fee2e2; }
         .btn-apagar-proprio { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
         .btn-apagar-proprio:hover { color: #ef4444; }
+        
         .poll-box { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-        .poll-option { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; position: relative; cursor: pointer; overflow: hidden; display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; }
-        .poll-bar { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(63, 81, 181, 0.1); transition: width 0.3s ease; z-index: 1; }
+        .poll-option { background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; position: relative; cursor: pointer; overflow: hidden; display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; }
+        .poll-bar { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(63, 81, 181, 0.15); transition: width 0.3s ease; z-index: 1; }
         .poll-text { z-index: 2; position: relative; }
+
+        .comments-section { margin-top: 10px; padding-top: 12px; border-top: 1px dashed var(--border-color); display: none; flex-direction: column; gap: 10px; }
+        .comment-box { display: flex; gap: 8px; background: var(--bg-body); padding: 8px 12px; border-radius: 8px; font-size: 13px; align-items: flex-start; }
+        .comment-box font { font-weight: 600; color: var(--primary); margin-right: 4px; }
+        .comment-input-group { display: flex; gap: 8px; margin-top: 5px; }
+        .comment-input-group input { flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 6px; font-size: 13px; outline: none; }
+        .comment-input-group button { background: var(--primary); color: white; border: none; padding: 0 12px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
+
+        .modal-config { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--bg-card); width: 100%; max-width: 450px; padding: 30px; border-radius: 12px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .modal-header h3 { font-size: 18px; color: var(--primary); }
     </style>
 </head>
 <body>
@@ -58,7 +108,7 @@
     <div class="login-container" id="telaLogin">
         <span class="material-icons logo-icon">groups</span>
         <h1>CEJA Social</h1>
-        <p class="subtitle">A rede social da nossa escola</p>
+        <p class="subtitle">A rede social do DrwwHost</p>
         <form id="loginForm">
             <div class="input-group"><label>E-mail Escolar</label><div class="input-wrapper"><span class="material-icons">person</span><input type="email" id="email" placeholder="seu-email@escola.com" required></div></div>
             <div class="input-group"><label>Senha</label><div class="input-wrapper"><span class="material-icons">lock</span><input type="password" id="password" placeholder="Sua senha" required></div></div>
@@ -70,7 +120,11 @@
     <div class="feed-container" id="telaFeed">
         <div class="feed-header">
             <h2>CEJA Social</h2>
-            <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span> Sair</button>
+            <div class="header-actions">
+                <button class="icon-btn" id="btnDarkMode" title="Alternar Tema"><span class="material-icons">dark_mode</span></button>
+                <button class="icon-btn" id="btnAbrirConfig" title="Configurações do Perfil"><span class="material-icons">settings</span></button>
+                <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span> Sair</button>
+            </div>
         </div>
 
         <div class="create-box">
@@ -80,8 +134,12 @@
             </div>
             
             <div id="formPost">
-                <textarea id="postTexto" placeholder="Faça uma pergunta acadêmica ou compartilhe algo..."></textarea>
-                <input type="text" id="postFotoUrl" placeholder="Link de uma foto da internet (opcional)" style="margin-top: 8px;">
+                <textarea id="postTexto" placeholder="Faça uma pergunta ou compartilhe algo para a zoeira..."></textarea>
+                <label class="file-label" for="postFotoFile">
+                    <span class="material-icons">add_photo_alternate</span> Carregar foto do dispositivo
+                </label>
+                <input type="file" id="postFotoFile" accept="image/*" style="display: none;">
+                <div id="statusUpload" style="font-size: 11px; color: var(--text-sub); margin-top: 4px;"></div>
             </div>
 
             <div id="formEnquete" style="display: none; flex-direction: column; gap: 8px;">
@@ -97,10 +155,36 @@
         <div class="posts-list" id="listaPosts"></div>
     </div>
 
+    <div class="modal-config" id="modalConfig">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Configurações do Perfil</h3>
+                <button class="icon-btn" id="btnFecharConfig"><span class="material-icons">close</span></button>
+            </div>
+            <div class="input-group">
+                <label>Nome de Exibição</label>
+                <div class="input-wrapper"><span class="material-icons">badge</span><input type="text" id="configNome" placeholder="Seu apelido"></div>
+            </div>
+            <div class="input-group">
+                <label>Status / Descrição Curta</label>
+                <div class="input-wrapper"><span class="material-icons">description</span><input type="text" id="configDesc" placeholder="Ex: Aluno do 3º Ano / Programador nas horas vagas"></div>
+            </div>
+            <div class="input-group">
+                <label>Foto de Perfil</label>
+                <label class="file-label" for="configFotoFile" style="margin-top: 8px; border: 1px dashed var(--border-color); padding: 10px; width: 100%; border-radius: 8px; justify-content: center;">
+                    <span class="material-icons">account_circle</span> Selecionar foto de perfil
+                </label>
+                <input type="file" id="configFotoFile" accept="image/*" style="display: none;">
+                <div id="statusPerfilUpload" style="font-size: 11px; color: var(--text-sub); text-align: center; margin-top: 5px;"></div>
+            </div>
+            <button class="btn-primary" id="btnSalvarConfig">Salvar Alterações</button>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBAKLujheHxFPWqGdufXCDFrF33Uuvvenw",
@@ -117,6 +201,79 @@
         const db = getFirestore(app);
 
         let modoAtual = 'post';
+        let fotoPostBase64 = "";
+        let fotoPerfilBase64 = "";
+        let dadosUsuariosCache = {};
+
+        if (localStorage.getItem('temaEscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        document.getElementById('btnDarkMode').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('temaEscuro', document.body.classList.contains('dark-mode'));
+        });
+
+        document.getElementById('postFotoFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                fotoPostBase64 = reader.result;
+                document.getElementById('statusUpload').innerText = "✓ Foto carregada (" + file.name + ")";
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('configFotoFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                fotoPerfilBase64 = reader.result;
+                document.getElementById('statusPerfilUpload').innerText = "✓ Imagem pronta: " + file.name;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        const modal = document.getElementById('modalConfig');
+        document.getElementById('btnAbrirConfig').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (user) {
+                const uid = user.uid;
+                const userDoc = await getDoc(doc(db, "usuarios", uid));
+                if (userDoc.exists()) {
+                    document.getElementById('configNome').value = userDoc.data().nome || "";
+                    document.getElementById('configDesc').value = userDoc.data().descricao || "";
+                }
+            }
+            modal.style.display = 'flex';
+        });
+        document.getElementById('btnFecharConfig').addEventListener('click', () => modal.style.display = 'none');
+
+        document.getElementById('btnSalvarConfig').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            const novoNome = document.getElementById('configNome').value.trim();
+            const novaDesc = document.getElementById('configDesc').value.trim();
+            const uid = user.uid;
+
+            const dadosSalvar = {
+                nome: novoNome || user.email.split('@')[0],
+                descricao: novaDesc || "Membro do CEJA Social"
+            };
+
+            if (fotoPerfilBase64) {
+                dadosSalvar.fotoPerfil = fotoPerfilBase64;
+            }
+
+            await setDoc(doc(db, "usuarios", uid), dadosSalvar, { merge: true });
+            modal.style.display = 'none';
+            fotoPerfilBase64 = "";
+            document.getElementById('statusPerfilUpload').innerText = "";
+            alert("Perfil atualizado!");
+        });
 
         document.getElementById('tabPost').addEventListener('click', (e) => {
             modoAtual = 'post';
@@ -139,7 +296,7 @@
                 document.getElementById('telaLogin').style.display = 'none';
                 document.getElementById('telaFeed').style.display = 'flex';
                 document.body.style.alignItems = 'flex-start';
-                ouvirBanco();
+                ouvirUsuariosEFeed();
             } else {
                 document.getElementById('telaLogin').style.display = 'block';
                 document.getElementById('telaFeed').style.display = 'none';
@@ -156,24 +313,28 @@
         document.getElementById('btnSair').addEventListener('click', () => signOut(auth));
 
         document.getElementById('btnPublicar').addEventListener('click', async () => {
-            const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "Usuário";
+            const user = auth.currentUser;
+            if(!user) return;
+            const usuarioLogado = user.email.split('@')[0];
 
             if (modoAtual === 'post') {
                 const texto = document.getElementById('postTexto').value.trim();
-                const foto = document.getElementById('postFotoUrl').value.trim();
-                if(!texto) return alert("Escreva algo antes de postar!");
+                if(!texto && !fotoPostBase64) return alert("Escreva algo ou adicione uma foto!");
 
                 await addDoc(collection(db, "posts"), {
                     tipo: 'post',
+                    autorUid: user.uid,
                     autor: usuarioLogado,
                     conteudo: texto,
-                    fotoUrl: foto,
+                    fotoUrl: fotoPostBase64,
                     curtidas: 0,
+                    qtdRespostas: 0,
                     oculto: false,
                     dataCriacao: new Date()
                 });
                 document.getElementById('postTexto').value = '';
-                document.getElementById('postFotoUrl').value = '';
+                document.getElementById('statusUpload').innerText = '';
+                fotoPostBase64 = "";
             } else {
                 const pergunta = document.getElementById('enquetePergunta').value.trim();
                 const op1 = document.getElementById('enqueteOpcao1').value.trim();
@@ -184,12 +345,14 @@
 
                 await addDoc(collection(db, "posts"), {
                     tipo: 'enquete',
+                    autorUid: user.uid,
                     autor: usuarioLogado,
                     conteudo: pergunta,
                     opcao1: op1, votos1: 0,
                     opcao2: op2, votos2: 0,
                     opcao3: op3 || null, votos3: 0,
                     curtidas: 0, 
+                    qtdRespostas: 0,
                     oculto: false,
                     dataCriacao: new Date()
                 });
@@ -219,69 +382,83 @@
             const chaveEnquete = `votado_${idDoPost}`;
             const jaVotou = localStorage.getItem(chaveEnquete);
 
-            if (jaVotou) {
-                alert("Você já deixou seu voto nessa enquete! Sem trapacear kkk.");
-                return;
-            }
+            if (jaVotou) return alert("Você já deixou seu voto nessa enquete!");
 
             const campoVoto = `votos${numeroOpcao}`;
-            try {
-                await updateDoc(documentoRef, { [campoVoto]: increment(1) });
-                localStorage.setItem(chaveEnquete, "true");
-            } catch (error) {
-                alert("Erro ao computar voto: " + error.message);
-            }
+            await updateDoc(documentoRef, { [campoVoto]: increment(1) });
+            localStorage.setItem(chaveEnquete, "true");
         }
 
         window.deletarProprioPost = async function(idDoPost) {
-            const confirmar = confirm("Tem certeza que deseja apagar a sua postagem? Essa ação não pode ser desfeita.");
-            if (!confirmar) return;
+            if (!confirm("Tem certeza que deseja apagar a sua postagem?")) return;
+            await deleteDoc(doc(db, "posts", idDoPost));
+        }
 
-            try {
-                await deleteDoc(doc(db, "posts", idDoPost));
-                alert("Postagem deletada com sucesso!");
-            } catch (err) {
-                alert("Erro ao apagar postagem: " + err.message);
+        window.alternarComentarios = function(idDoPost) {
+            const divComments = document.getElementById(`box-comments-${idDoPost}`);
+            if (divComments.style.display === 'flex') {
+                divComments.style.display = 'none';
+            } else {
+                divComments.style.display = 'flex';
+                ouvirComentarios(idDoPost);
             }
+        }
+
+        window.enviarComentario = async function(idDoPost) {
+            const input = document.getElementById(`input-coment-${idDoPost}`);
+            const texto = input.value.trim();
+            if(!texto) return;
+
+            const user = auth.currentUser;
+            const nomeAutor = dadosUsuariosCache[user.uid]?.nome || user.email.split('@')[0];
+
+            await addDoc(collection(db, "posts", idDoPost, "respostas"), {
+                autor: nomeAutor,
+                conteudo: texto,
+                dataCriacao: new Date()
+            });
+
+            await updateDoc(doc(db, "posts", idDoPost), {
+                qtdRespostas: increment(1)
+            });
+
+            input.value = '';
+        }
+
+        function ouvirComentarios(idDoPost) {
+            const q = query(collection(db, "posts", idDoPost, "respostas"), orderBy("dataCriacao", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const container = document.getElementById(`list-coment-${idDoPost}`);
+                container.innerHTML = '';
+                snapshot.forEach((subDoc) => {
+                    const dados = subDoc.data();
+                    container.insertAdjacentHTML('beforeend', `
+                        <div class="comment-box">
+                            <div><font>${dados.autor}:</font><span>${dados.conteudo}</span></div>
+                        </div>
+                    `);
+                });
+            });
+        }
+
+        function ouvirUsuariosEFeed() {
+            onSnapshot(collection(db, "usuarios"), (snapshot) => {
+                snapshot.forEach((docSnap) => {
+                    dadosUsuariosCache[docSnap.id] = docSnap.data();
+                });
+                renderizarFeed();
+            });
         }
 
         window.painelModeracao = async function(idDoPost, autorPost) {
-            if (autorPost === 'drwwelias') {
-                alert("Ação recusada! Suas próprias postagens são protegidas e nunca podem ser derrubadas.");
-                return;
-            }
-
-            const acao = prompt("Painel de Moderação CEJA:\nDigite 1 para OCULTAR TEMPORARIAMENTE\nDigite 2 para EXCLUIR PARA SEMPRE\nDigite 0 para Cancelar");
-            if (acao !== "1" && acao !== "2") return;
-
-            const darStrike = confirm(`Deseja aplicar 1 STRIKE no usuário @${autorPost}?`);
-            const documentoRef = doc(db, "posts", idDoPost);
-
-            try {
-                if (acao === "1") {
-                    await updateDoc(documentoRef, { oculto: true });
-                    alert("A postagem foi ocultada do feed temporariamente!");
-                } else if (acao === "2") {
-                    await deleteDoc(documentoRef);
-                    alert("A postagem foi excluída do banco de dados para sempre!");
-                }
-
-                if (darStrike) {
-                    await addDoc(collection(db, "strikes"), {
-                        usuarioPunido: autorPost,
-                        dataStrike: new Date(),
-                        motivo: "Violação das diretrizes da comunidade CEJA"
-                    });
-                    alert(`Strike registrado com sucesso para @${autorPost}!`);
-                }
-            } catch (err) {
-                alert("Erro ao executar ação de moderador: " + err.message);
-            }
+            if (autorPost === 'drwwelias') return alert("Ação recusada! Perfil protegido.");
+            const acao = prompt("Painel de Moderação:\n1 - Ocultar\n2 - Excluir permanente");
+            if (acao === "1") await updateDoc(doc(db, "posts", idDoPost), { oculto: true });
+            if (acao === "2") await deleteDoc(doc(db, "posts", idDoPost));
         }
 
-        function ouvirBanco() {
+        function renderizarFeed() {
             const q = query(collection(db, "posts"), orderBy("dataCriacao", "desc"));
-            
             onSnapshot(q, (snapshot) => {
                 const listaPosts = document.getElementById('listaPosts');
                 listaPosts.innerHTML = ''; 
@@ -296,99 +473,87 @@
 
                     if (item.oculto === true && !ehModerador) return;
 
-                    const inicial = item.autor ? item.autor[0].toUpperCase() : 'U';
+                    const userMeta = dadosUsuariosCache[item.autorUid] || {};
+                    const nomeExibicao = userMeta.nome || item.autor || "Usuário";
+                    const descExibicao = userMeta.descricao || "Membro do DrwwHost";
+                    
+                    let avatarHtml = `<span class="avatar">${nomeExibicao[0].toUpperCase()}</span>`;
+                    if (userMeta.fotoPerfil) {
+                        avatarHtml = `<img src="${userMeta.fotoPerfil}" class="avatar-img">`;
+                    }
+
                     const estiloOculto = item.oculto ? 'style="opacity: 0.5; border: 2px dashed red;"' : '';
-                    const avisoOculto = item.oculto ? '<span style="color:red; font-size:12px; font-weight:bold;">[OCULTADO TEMPORARIAMENTE]</span>' : '';
+                    const avisoOculto = item.oculto ? '<span style="color:red; font-size:12px; font-weight:bold;">[OCULTADO]</span>' : '';
 
                     let botaoDireito = '';
                     if (item.autor === usuarioLogado) {
-                        botaoDireito = `
-                            <button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')">
-                                <span class="material-icons" style="font-size:16px;">delete_outline</span> Apagar
-                            </button>
-                        `;
+                        botaoDireito = `<button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:16px;">delete_outline</span> Apagar</button>`;
                     } else if (ehModerador) {
-                        botaoDireito = `
-                            <button class="btn-moderador" onclick="painelModeracao('${id}', '${item.autor}')">
-                                <span class="material-icons" style="font-size:14px;">gavel</span> Moderar
-                            </button>
-                        `;
+                        botaoDireito = `<button class="btn-moderador" onclick="painelModeracao('${id}', '${item.autor}')"><span class="material-icons" style="font-size:14px;">gavel</span> Moderar</button>`;
                     }
+
+                    let mioloHtml = '';
 
                     if (item.tipo === 'enquete') {
                         const v1 = Number(item.votos1) || 0;
                         const v2 = Number(item.votos2) || 0;
                         const v3 = Number(item.votos3) || 0;
                         const totalVotos = v1 + v2 + v3;
-
-                        const calcPct = (votosOpcao) => {
-                            if (totalVotos <= 0 || !votosOpcao) return 0;
-                            return Math.round((votosOpcao / totalVotos) * 100);
-                        };
-
-                        const textoOp1 = item.opcao1 || "Opção 1";
-                        const textoOp2 = item.opcao2 || "Opção 2";
-                        const textoOp3 = item.opcao3 || null;
+                        const calcPct = (v) => totalVotos <= 0 ? 0 : Math.round((v / totalVotos) * 100);
 
                         let htmlOpcao3 = '';
-                        if(textoOp3) {
-                            htmlOpcao3 = `
-                                <div class="poll-option" onclick="votarEnquete('${id}', 3)">
-                                    <div class="poll-bar" style="width: ${calcPct(v3)}%"></div>
-                                    <span class="poll-text">${textoOp3}</span>
-                                    <span class="poll-text">${calcPct(v3)}% (${v3})</span>
-                                </div>
-                            `;
+                        if(item.opcao3) {
+                            htmlOpcao3 = `<div class="poll-option" onclick="votarEnquete('${id}', 3)"><div class="poll-bar" style="width: ${calcPct(v3)}%"></div><span class="poll-text">${item.opcao3}</span><span class="poll-text">${calcPct(v3)}% (${v3})</span></div>`;
                         }
 
-                        const enqueteHtml = `
-                            <div class="post-card" ${estiloOculto}>
-                                <div class="post-author"><span class="avatar">${inicial}</span><div>${item.autor} <span style="font-weight:400; color:#64748b; font-size:12px;">(Criou uma enquete)</span> ${avisoOculto}</div></div>
-                                <div class="post-content" style="font-weight:600; font-size:16px;">${item.conteudo}</div>
-                                <div class="poll-box">
-                                    <div class="poll-option" onclick="votarEnquete('${id}', 1)">
-                                        <div class="poll-bar" style="width: ${calcPct(v1)}%"></div>
-                                        <span class="poll-text">${textoOp1}</span>
-                                        <span class="poll-text">${calcPct(v1)}% (${v1})</span>
-                                    </div>
-                                    <div class="poll-option" onclick="votarEnquete('${id}', 2)">
-                                        <div class="poll-bar" style="width: ${calcPct(v2)}%"></div>
-                                        <span class="poll-text">${textoOp2}</span>
-                                        <span class="poll-text">${calcPct(v2)}% (${v2})</span>
-                                    </div>
-                                    ${htmlOpcao3}
-                                </div>
-                                <div style="font-size:12px; color:#64748b; text-align:right; margin-top:5px; margin-bottom: 5px;">Total de votos: ${totalVotos}</div>
-                                
-                                <div class="post-actions">
-                                    <div class="action-group">
-                                        <button class="action-btn" onclick="curtirPost('${id}')">
-                                            <span class="material-icons" style="font-size:18px; color:#3f51b5;">thumb_up</span> Curtir Enquete (${item.curtidas || 0})
-                                        </button>
-                                    </div>
-                                    ${botaoDireito}
-                                </div>
+                        mioloHtml = `
+                            <div class="post-content" style="font-weight:600; font-size:16px;">${item.conteudo}</div>
+                            <div class="poll-box">
+                                <div class="poll-option" onclick="votarEnquete('${id}', 1)"><div class="poll-bar" style="width: ${calcPct(v1)}%"></div><span class="poll-text">${item.opcao1 || "Opção 1"}</span><span class="poll-text">${calcPct(v1)}% (${v1})</span></div>
+                                <div class="poll-option" onclick="votarEnquete('${id}', 2)"><div class="poll-bar" style="width: ${calcPct(v2)}%"></div><span class="poll-text">${item.opcao2 || "Opção 2"}</span><span class="poll-text">${calcPct(v2)}% (${v2})</span></div>
+                                ${htmlOpcao3}
                             </div>
+                            <div style="font-size:12px; color:var(--text-sub); text-align:right;">Total de votos: ${totalVotos}</div>
                         `;
-                        listaPosts.insertAdjacentHTML('beforeend', enqueteHtml);
                     } else {
                         const tagImagem = item.fotoUrl ? `<img src="${item.fotoUrl}" class="post-image">` : '';
-                        const postHtml = `
-                            <div class="post-card" ${estiloOculto}>
-                                <div class="post-author"><span class="avatar">${inicial}</span><div>${item.autor} ${avisoOculto}</div></div>
-                                <div class="post-content"><p>${item.conteudo}</p>${tagImagem}</div>
-                                <div class="post-actions">
-                                    <div class="action-group">
-                                        <button class="action-btn" onclick="curtirPost('${id}')">
-                                            <span class="material-icons" style="font-size:18px; color:#3f51b5;">thumb_up</span> Curtir (${item.curtidas || 0})
-                                        </button>
-                                    </div>
-                                    ${botaoDireito}
+                        mioloHtml = `<div class="post-content"><p>${item.conteudo}</p>${tagImagem}</div>`;
+                    }
+
+                    const estruturaCard = `
+                        <div class="post-card" ${estiloOculto}>
+                            <div class="post-author">
+                                ${avatarHtml}
+                                <div class="author-info">
+                                    <div>${nomeExibicao} ${avisoOculto}</div>
+                                    <div class="author-desc">${descExibicao}</div>
                                 </div>
                             </div>
-                        `;
-                        listaPosts.insertAdjacentHTML('beforeend', postHtml);
-                    }
+                            
+                            ${mioloHtml}
+                            
+                            <div class="post-actions">
+                                <div class="action-group">
+                                    <button class="action-btn" onclick="curtirPost('${id}')">
+                                        <span class="material-icons" style="font-size:18px;">thumb_up</span> (${item.curtidas || 0})
+                                    </button>
+                                    <button class="action-btn" onclick="alternarComentarios('${id}')">
+                                        <span class="material-icons" style="font-size:18px;">forum</span> Respostas (${item.qtdRespostas || 0})
+                                    </button>
+                                </div>
+                                ${botaoDireito}
+                            </div>
+
+                            <div class="comments-section" id="box-comments-${id}">
+                                <div class="comment-input-group">
+                                    <input type="text" id="input-coment-${id}" placeholder="Escreva uma resposta de zoeira...">
+                                    <button onclick="enviarComentario('${id}')">Responder</button>
+                                </div>
+                                <div id="list-coment-${id}" style="display:flex; flex-direction:column; gap:6px; margin-top:5px;"></div>
+                            </div>
+                        </div>
+                    `;
+                    listaPosts.insertAdjacentHTML('beforeend', estruturaCard);
                 });
             });
         }
