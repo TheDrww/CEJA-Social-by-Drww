@@ -230,6 +230,7 @@
             <span class="material-icons">person</span>Perfil
         </button>
     </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -269,8 +270,12 @@
         const modalPublicar = document.getElementById('modalPublicar');
         const modalConfig = document.getElementById('modalConfig');
 
-        document.getElementById('navAdd').addEventListener('click', () => modalPublicar.style.display = 'flex');
-        document.getElementById('btnFecharPublicar').addEventListener('click', () => modalPublicar.style.display = 'none');
+        document.getElementById('navAdd').addEventListener('click', () => {
+            modalPublicar.style.display = 'flex';
+        });
+        document.getElementById('btnFecharPublicar').addEventListener('click', () => {
+            modalPublicar.style.display = 'none';
+        });
         
         document.getElementById('navPerfil').addEventListener('click', async () => {
             const user = auth.currentUser;
@@ -283,7 +288,9 @@
             }
             modalConfig.style.display = 'flex';
         });
-        document.getElementById('btnFecharConfig').addEventListener('click', () => modalConfig.style.display = 'none');
+        document.getElementById('btnFecharConfig').addEventListener('click', () => {
+            modalConfig.style.display = 'none';
+        });
         document.getElementById('navHome').addEventListener('click', () => {
             document.getElementById('campoBusca').value = "";
             termoPesquisa = "";
@@ -332,7 +339,7 @@
             modalConfig.style.display = 'none';
             fotoPerfilBase64 = "";
             document.getElementById('statusPerfilUpload').innerText = "";
-            alert("Perfil atualizado com sucesso!");
+            alert("Perfil atualizado!");
         });
 
         // Alternador de Abas de Criação
@@ -429,7 +436,7 @@
             modalPublicar.style.display = 'none';
         });
 
-        // Funções de Interação na Window (Globais)
+        // Funções Globais na Window
         window.curtirPost = async function(idDoPost) {
             const documentoRef = doc(db, "posts", idDoPost);
             const chaveLocal = `curtido_${idDoPost}`;
@@ -502,7 +509,6 @@
             renderizarFeed();
         };
 
-        // Escutas do Banco de Dados
         function ouvirComentarios(idDoPost) {
             const q = query(collection(db, "posts", idDoPost, "respostas"), orderBy("dataCriacao", "asc"));
             onSnapshot(q, (snapshot) => {
@@ -524,7 +530,6 @@
             renderizarFeed();
         });
 
-        // Formatador dinâmico de Hashtags no layout
         function formatarTexto(texto) {
             if(!texto) return "";
             return texto.replace(/#(\w+)/g, '<span class="hashtag" onclick="filtrarPorHashtag(\'#$1\')">#$1</span>');
@@ -535,17 +540,18 @@
                 snapshot.forEach((docSnap) => {
                     dadosUsuariosCache[docSnap.id] = docSnap.data();
                 });
-                caruqeSeguidoresSempreAtivo();
+                carregarSeguidoresSempreAtivo();
             });
         }
 
-        function caruqeSeguidoresSempreAtivo() {
+        function carregarSeguidoresSempreAtivo() {
             onSnapshot(collection(db, "seguidores"), () => {
                 carregarSeguidores();
             });
         }
 
         async function carregarSeguidores() {
+            if (!auth.currentUser) return;
             const me = auth.currentUser.uid;
             const q = query(collection(db, "seguidores"), where("seguidor", "==", me));
             const snapshot = await getDocs(q);
@@ -560,11 +566,10 @@
                 const listaPosts = document.getElementById('listaPosts');
                 listaPosts.innerHTML = ''; 
                 
-                const emaiLogado = auth.currentUser ? auth.currentUser.email : "";
+                const emailLogado = auth.currentUser ? auth.currentUser.email : "";
                 const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "";
-                const ehModerador = (emaiLogado === "drwwelias@gmail.com");
+                const ehModerador = (emailLogado === "drwwelias@gmail.com");
 
-                // Processar totais de followers para exibição nos perfis em tempo real
                 const todosSeguidores = await getDocs(collection(db, "seguidores"));
                 let contagemSeguidores = {};
                 let contagemSeguindo = {};
@@ -580,11 +585,11 @@
 
                     if (item.oculto && !ehModerador) return;
 
+                    const tipoPost = item.tipo || 'post';
                     const userMeta = dadosUsuariosCache[item.autorUid] || {};
                     const nomeExibicao = userMeta.nome || item.autor || "Usuário";
                     const descExibicao = userMeta.descricao || "Membro da rede";
                     
-                    // Validador de filtros de pesquisa (texto e hashtag)
                     if (termoPesquisa) {
                         const noTexto = item.conteudo ? item.conteudo.toLowerCase().includes(termoPesquisa) : false;
                         const noNome = nomeExibicao.toLowerCase().includes(termoPesquisa);
@@ -595,7 +600,6 @@
                     let avatarHtml = `<span class="avatar">${nomeExibicao[0].toUpperCase()}</span>`;
                     if (userMeta.fotoPerfil) avatarHtml = `<img src="${userMeta.fotoPerfil}" class="avatar-img">`;
 
-                    // Botão de Seguir Inteligente
                     let botaoFollow = "";
                     if(auth.currentUser && item.autorUid !== auth.currentUser.uid) {
                         const jaSegue = listaSeguindoCache.includes(item.autorUid);
@@ -611,7 +615,7 @@
                     }
 
                     let mioloHtml = '';
-                    if (item.tipo === 'enquete') {
+                    if (tipoPost === 'enquete') {
                         const v1 = Number(item.votos1) || 0, v2 = Number(item.votos2) || 0, v3 = Number(item.votos3) || 0;
                         const totalVotos = v1 + v2 + v3;
                         const pct = (v) => totalVotos <= 0 ? 0 : Math.round((v / totalVotos) * 100);
