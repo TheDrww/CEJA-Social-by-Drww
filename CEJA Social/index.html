@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEJA Social</title>
+    <title>TheLibertyPage</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -31,8 +31,9 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background-color 0.2s, border-color 0.2s; }
-        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px 20px 80px 20px; }
         
+        /* Login */
         .login-container { background: var(--bg-card); width: 100%; max-width: 400px; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); text-align: center; display: block; }
         .logo-icon { font-size: 70px; color: var(--primary); margin-bottom: 10px; }
         h1 { color: var(--primary); font-size: 28px; font-weight: 700; margin-bottom: 6px; }
@@ -49,33 +50,36 @@
         .btn-secondary { background: none; border: none; color: var(--primary); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 25px; }
         .btn-secondary:hover { text-decoration: underline; }
         
+        /* Feed Header e Busca */
         .feed-container { width: 100%; max-width: 600px; display: none; flex-direction: column; gap: 20px; align-self: flex-start; }
-        .feed-header { background: var(--bg-card); padding: 16px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; }
-        .feed-header h2 { color: var(--primary); font-size: 22px; font-weight: 700; }
+        .feed-header { background: var(--bg-card); padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 10px; position: sticky; top: 10px; z-index: 10; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        .header-top h2 { color: var(--primary); font-size: 22px; font-weight: 700; }
+        .search-wrapper { position: relative; width: 100%; }
+        .search-wrapper span { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-sub); font-size: 18px; }
+        .search-wrapper input { width: 100%; padding: 8px 12px 8px 36px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); border-radius: 20px; font-size: 14px; outline: none; }
         .header-actions { display: flex; gap: 12px; align-items: center; }
         .icon-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; font-size: 24px; display: flex; align-items: center; }
         .icon-btn:hover { color: var(--primary); }
         .btn-logout { background: none; border: none; color: #ef4444; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 500; }
         
-        .create-box { background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; }
-        .create-box textarea { width: 100%; min-height: 70px; padding: 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; resize: none; font-size: 15px; outline: none; }
-        .create-box input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 13px; outline: none; }
-        .file-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-top: 4px; }
-        
-        .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
-        .tab-btn { background: var(--bg-body); border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: var(--text-sub); }
-        .tab-btn.active { background: var(--primary); color: white; }
-        
-        .posts-list { display: flex; flex-direction: column; gap: 16px; }
+        /* Cards de Post */
+        .posts-list { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
         .post-card { background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; position: relative; }
         .post-author { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-main); font-size: 15px; }
         .post-author img.avatar-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
         .post-author span.avatar { background: var(--border-color); color: var(--text-sub); width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
-        .author-info { display: flex; flex-direction: column; }
+        .author-info { display: flex; flex-direction: column; flex: 1; }
         .author-desc { font-size: 11px; color: var(--text-sub); font-weight: 400; }
         .post-content { color: var(--text-main); font-size: 15px; line-height: 1.5; }
         .post-image { width: 100%; max-height: 380px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: block; }
         
+        /* Sistema de Follow */
+        .btn-follow { background: var(--primary); color: white; border: none; padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .btn-follow.following { background: var(--border-color); color: var(--text-main); }
+        .stats-text { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+
+        /* Ações do Post */
         .post-actions { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; gap: 20px; justify-content: space-between; align-items: center; }
         .action-group { display: flex; gap: 16px; }
         .action-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
@@ -85,11 +89,13 @@
         .btn-apagar-proprio { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
         .btn-apagar-proprio:hover { color: #ef4444; }
         
+        /* Enquetes */
         .poll-box { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .poll-option { background: var(--bg-body); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; position: relative; cursor: pointer; overflow: hidden; display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; }
         .poll-bar { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(63, 81, 181, 0.15); transition: width 0.3s ease; z-index: 1; }
         .poll-text { z-index: 2; position: relative; }
 
+        /* Comentários */
         .comments-section { margin-top: 10px; padding-top: 12px; border-top: 1px dashed var(--border-color); display: none; flex-direction: column; gap: 10px; }
         .comment-box { display: flex; gap: 8px; background: var(--bg-body); padding: 8px 12px; border-radius: 8px; font-size: 13px; align-items: flex-start; }
         .comment-box font { font-weight: 600; color: var(--primary); margin-right: 4px; }
@@ -97,65 +103,97 @@
         .comment-input-group input { flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 6px; font-size: 13px; outline: none; }
         .comment-input-group button { background: var(--primary); color: white; border: none; padding: 0 12px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
 
-        .modal-config { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: var(--bg-card); width: 100%; max-width: 450px; padding: 30px; border-radius: 12px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        /* Modais Flutuantes (Configuração e Publicação) */
+        .modal-floating { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--bg-card); width: 100%; max-width: 480px; padding: 25px; border-radius: 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        .modal-header h3 { font-size: 18px; color: var(--primary); }
+        .modal-header h3 { font-size: 18px; color: var(--primary); font-weight: 700; }
+        
+        /* Abas internas do criador de post */
+        .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
+        .tab-btn { background: var(--bg-body); border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: var(--text-sub); }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .create-box-content textarea { width: 100%; min-height: 90px; padding: 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; resize: none; font-size: 15px; outline: none; }
+        .create-box-content input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 14px; outline: none; }
+        .file-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-top: 4px; }
+
+        /* Barra de Navegação Inferior (Estilo Mobile App) */
+        .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 10px 0; justify-content: space-around; align-items: center; z-index: 90; box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
+        .nav-item { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 500; gap: 2px; }
+        .nav-item.active, .nav-item:hover { color: var(--primary); }
+        .nav-item.btn-add-center { background: var(--primary); color: white !important; width: 48px; height: 48px; border-radius: 50%; justify-content: center; transform: translateY(-5px); box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3); }
+        .nav-item.btn-add-center:hover { background: var(--primary-hover); }
+        
+        /* Highlight de Hashtag */
+        .hashtag { color: var(--primary); font-weight: 600; cursor: pointer; }
+        .hashtag:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div class="login-container" id="telaLogin">
         <span class="material-icons logo-icon">groups</span>
-        <h1>CEJA Social</h1>
-        <p class="subtitle">A rede social do DrwwHost</p>
+        <h1>TheLibertyPage</h1>
+        <p class="subtitle">A rede social livre do DrwwHost</p>
         <form id="loginForm">
-            <div class="input-group"><label>E-mail Escolar</label><div class="input-wrapper"><span class="material-icons">person</span><input type="email" id="email" placeholder="seu-email@escola.com" required></div></div>
+            <div class="input-group"><label>E-mail de Usuário</label><div class="input-wrapper"><span class="material-icons">person</span><input type="email" id="email" placeholder="seu-nome@dominio.com" required></div></div>
             <div class="input-group"><label>Senha</label><div class="input-wrapper"><span class="material-icons">lock</span><input type="password" id="password" placeholder="Sua senha" required></div></div>
             <button type="button" class="btn-primary" id="btnEntrar">Entrar</button>
         </form>
-        <button class="btn-secondary" id="btnCadastrar">Novo por aqui? Crie sua conta escolar</button>
+        <button class="btn-secondary" id="btnCadastrar">Novo por aqui? Crie sua conta de acesso</button>
     </div>
 
     <div class="feed-container" id="telaFeed">
         <div class="feed-header">
-            <h2>CEJA Social</h2>
-            <div class="header-actions">
-                <button class="icon-btn" id="btnDarkMode" title="Alternar Tema"><span class="material-icons">dark_mode</span></button>
-                <button class="icon-btn" id="btnAbrirConfig" title="Configurações do Perfil"><span class="material-icons">settings</span></button>
-                <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span> Sair</button>
+            <div class="header-top">
+                <h2>TheLibertyPage</h2>
+                <div class="header-actions">
+                    <button class="icon-btn" id="btnDarkMode" title="Alternar Tema"><span class="material-icons">dark_mode</span></button>
+                    <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span></button>
+                </div>
             </div>
-        </div>
-
-        <div class="create-box">
-            <div class="tab-menu">
-                <button class="tab-btn active" id="tabPost">Texto/Foto</button>
-                <button class="tab-btn" id="tabEnquete">Nova Enquete</button>
+            <div class="search-wrapper">
+                <span class="material-icons">search</span>
+                <input type="text" id="campoBusca" placeholder="Pesquisar por texto ou #hashtag...">
             </div>
-            
-            <div id="formPost">
-                <textarea id="postTexto" placeholder="Faça uma pergunta ou compartilhe algo para a zoeira..."></textarea>
-                <label class="file-label" for="postFotoFile">
-                    <span class="material-icons">add_photo_alternate</span> Carregar foto do dispositivo
-                </label>
-                <input type="file" id="postFotoFile" accept="image/*" style="display: none;">
-                <div id="statusUpload" style="font-size: 11px; color: var(--text-sub); margin-top: 4px;"></div>
-            </div>
-
-            <div id="formEnquete" style="display: none; flex-direction: column; gap: 8px;">
-                <input type="text" id="enquetePergunta" placeholder="Qual a sua pergunta para a enquete?">
-                <input type="text" id="enqueteOpcao1" placeholder="Opção 1">
-                <input type="text" id="enqueteOpcao2" placeholder="Opção 2">
-                <input type="text" id="enqueteOpcao3" placeholder="Opção 3 (Opcional)">
-            </div>
-
-            <button class="btn-primary" id="btnPublicar" style="margin-top:5px;">Compartilhar no CEJA</button>
         </div>
 
         <div class="posts-list" id="listaPosts"></div>
     </div>
 
-    <div class="modal-config" id="modalConfig">
+    <div class="modal-floating" id="modalPublicar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova Publicação</h3>
+                <button class="icon-btn" id="btnFecharPublicar"><span class="material-icons">close</span></button>
+            </div>
+            <div class="tab-menu">
+                <button class="tab-btn active" id="tabPost">Texto/Foto</button>
+                <button class="tab-btn" id="tabEnquete">Nova Enquete</button>
+            </div>
+            
+            <div class="create-box-content">
+                <div id="formPost">
+                    <textarea id="postTexto" placeholder="Mande a sua resenha ou meme sem filtros... Use #tags!"></textarea>
+                    <label class="file-label" for="postFotoFile">
+                        <span class="material-icons">add_photo_alternate</span> Carregar imagem do dispositivo
+                    </label>
+                    <input type="file" id="postFotoFile" accept="image/*" style="display: none;">
+                    <div id="statusUpload" style="font-size: 11px; color: var(--text-sub); margin-top: 4px;"></div>
+                </div>
+
+                <div id="formEnquete" style="display: none; flex-direction: column; gap: 8px;">
+                    <input type="text" id="enquetePergunta" placeholder="Qual a sua pergunta para a enquete?">
+                    <input type="text" id="enqueteOpcao1" placeholder="Opção 1">
+                    <input type="text" id="enqueteOpcao2" placeholder="Opção 2">
+                    <input type="text" id="enqueteOpcao3" placeholder="Opção 3 (Opcional)">
+                </div>
+            </div>
+            <button class="btn-primary" id="btnPublicar">Compartilhar na Rede</button>
+        </div>
+    </div>
+
+    <div class="modal-floating" id="modalConfig">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Configurações do Perfil</h3>
@@ -166,8 +204,8 @@
                 <div class="input-wrapper"><span class="material-icons">badge</span><input type="text" id="configNome" placeholder="Seu apelido"></div>
             </div>
             <div class="input-group">
-                <label>Status / Descrição Curta</label>
-                <div class="input-wrapper"><span class="material-icons">description</span><input type="text" id="configDesc" placeholder="Ex: Aluno do 3º Ano / Programador nas horas vagas"></div>
+                <label>Status / Descrição Curta (Use #tags se quiser)</label>
+                <div class="input-wrapper"><span class="material-icons">description</span><input type="text" id="configDesc" placeholder="Ex: Apaixonado por corrida #racer #games"></div>
             </div>
             <div class="input-group">
                 <label>Foto de Perfil</label>
@@ -181,10 +219,21 @@
         </div>
     </div>
 
+    <div class="bottom-nav" id="barraNavegacao">
+        <button class="nav-item active" id="navHome">
+            <span class="material-icons">home</span>Início
+        </button>
+        <button class="nav-item btn-add-center" id="navAdd" title="Criar Post">
+            <span class="material-icons" style="font-size: 28px;">add</span>
+        </button>
+        <button class="nav-item" id="navPerfil">
+            <span class="material-icons">person</span>Perfil
+        </button>
+    </div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, increment, setDoc, getDoc, getDocs, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBAKLujheHxFPWqGdufXCDFrF33Uuvvenw",
@@ -200,27 +249,55 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let modoAtual = 'post';
+        let modoCriacao = 'post';
         let fotoPostBase64 = "";
         let fotoPerfilBase64 = "";
         let dadosUsuariosCache = {};
+        let listaSeguindoCache = [];
+        let termoPesquisa = "";
 
+        // Tema Escuro
         if (localStorage.getItem('temaEscuro') === 'true') {
             document.body.classList.add('dark-mode');
         }
-
         document.getElementById('btnDarkMode').addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('temaEscuro', document.body.classList.contains('dark-mode'));
         });
 
+        // Modais de Controle
+        const modalPublicar = document.getElementById('modalPublicar');
+        const modalConfig = document.getElementById('modalConfig');
+
+        document.getElementById('navAdd').addEventListener('click', () => modalPublicar.style.display = 'flex');
+        document.getElementById('btnFecharPublicar').addEventListener('click', () => modalPublicar.style.display = 'none');
+        
+        document.getElementById('navPerfil').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (user) {
+                const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+                if (userDoc.exists()) {
+                    document.getElementById('configNome').value = userDoc.data().nome || "";
+                    document.getElementById('configDesc').value = userDoc.data().descricao || "";
+                }
+            }
+            modalConfig.style.display = 'flex';
+        });
+        document.getElementById('btnFecharConfig').addEventListener('click', () => modalConfig.style.display = 'none');
+        document.getElementById('navHome').addEventListener('click', () => {
+            document.getElementById('campoBusca').value = "";
+            termoPesquisa = "";
+            renderizarFeed();
+        });
+
+        // Upload local e conversão Base64
         document.getElementById('postFotoFile').addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onloadend = () => {
                 fotoPostBase64 = reader.result;
-                document.getElementById('statusUpload').innerText = "✓ Foto carregada (" + file.name + ")";
+                document.getElementById('statusUpload').innerText = "✓ Imagem carregada (" + file.name + ")";
             };
             reader.readAsDataURL(file);
         });
@@ -231,52 +308,36 @@
             const reader = new FileReader();
             reader.onloadend = () => {
                 fotoPerfilBase64 = reader.result;
-                document.getElementById('statusPerfilUpload').innerText = "✓ Imagem pronta: " + file.name;
+                document.getElementById('statusPerfilUpload').innerText = "✓ Perfil pronto: " + file.name;
             };
             reader.readAsDataURL(file);
         });
 
-        const modal = document.getElementById('modalConfig');
-        document.getElementById('btnAbrirConfig').addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (user) {
-                const uid = user.uid;
-                const userDoc = await getDoc(doc(db, "usuarios", uid));
-                if (userDoc.exists()) {
-                    document.getElementById('configNome').value = userDoc.data().nome || "";
-                    document.getElementById('configDesc').value = userDoc.data().descricao || "";
-                }
-            }
-            modal.style.display = 'flex';
-        });
-        document.getElementById('btnFecharConfig').addEventListener('click', () => modal.style.display = 'none');
-
+        // Salvar Perfil
         document.getElementById('btnSalvarConfig').addEventListener('click', async () => {
             const user = auth.currentUser;
             if (!user) return;
             
             const novoNome = document.getElementById('configNome').value.trim();
             const novaDesc = document.getElementById('configDesc').value.trim();
-            const uid = user.uid;
 
             const dadosSalvar = {
                 nome: novoNome || user.email.split('@')[0],
-                descricao: novaDesc || "Membro do CEJA Social"
+                descricao: novaDesc || "Membro da rede"
             };
 
-            if (fotoPerfilBase64) {
-                dadosSalvar.fotoPerfil = fotoPerfilBase64;
-            }
+            if (fotoPerfilBase64) dadosSalvar.fotoPerfil = fotoPerfilBase64;
 
-            await setDoc(doc(db, "usuarios", uid), dadosSalvar, { merge: true });
-            modal.style.display = 'none';
+            await setDoc(doc(db, "usuarios", user.uid), dadosSalvar, { merge: true });
+            modalConfig.style.display = 'none';
             fotoPerfilBase64 = "";
             document.getElementById('statusPerfilUpload').innerText = "";
-            alert("Perfil atualizado!");
+            alert("Perfil atualizado com sucesso!");
         });
 
+        // Alternador de Abas de Criação
         document.getElementById('tabPost').addEventListener('click', (e) => {
-            modoAtual = 'post';
+            modoCriacao = 'post';
             e.target.classList.add('active');
             document.getElementById('tabEnquete').classList.remove('active');
             document.getElementById('formPost').style.display = 'block';
@@ -284,22 +345,25 @@
         });
 
         document.getElementById('tabEnquete').addEventListener('click', (e) => {
-            modoAtual = 'enquete';
+            modoCriacao = 'enquete';
             e.target.classList.add('active');
             document.getElementById('tabPost').classList.remove('active');
             document.getElementById('formPost').style.display = 'none';
             document.getElementById('formEnquete').style.display = 'flex';
         });
 
+        // Estado de Autenticação
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('telaLogin').style.display = 'none';
                 document.getElementById('telaFeed').style.display = 'flex';
+                document.getElementById('barraNavegacao').style.display = 'flex';
                 document.body.style.alignItems = 'flex-start';
-                ouvirUsuariosEFeed();
+                carregarDadosIniciais();
             } else {
                 document.getElementById('telaLogin').style.display = 'block';
                 document.getElementById('telaFeed').style.display = 'none';
+                document.getElementById('barraNavegacao').style.display = 'none';
                 document.body.style.alignItems = 'center';
             }
         });
@@ -312,14 +376,15 @@
         });
         document.getElementById('btnSair').addEventListener('click', () => signOut(auth));
 
+        // Publicar Postagem / Enquete
         document.getElementById('btnPublicar').addEventListener('click', async () => {
             const user = auth.currentUser;
             if(!user) return;
             const usuarioLogado = user.email.split('@')[0];
 
-            if (modoAtual === 'post') {
+            if (modoCriacao === 'post') {
                 const texto = document.getElementById('postTexto').value.trim();
-                if(!texto && !fotoPostBase64) return alert("Escreva algo ou adicione uma foto!");
+                if(!texto && !fotoPostBase64) return alert("Adicione texto ou imagem!");
 
                 await addDoc(collection(db, "posts"), {
                     tipo: 'post',
@@ -361,38 +426,28 @@
                 document.getElementById('enqueteOpcao2').value = '';
                 document.getElementById('enqueteOpcao3').value = '';
             }
+            modalPublicar.style.display = 'none';
         });
 
+        // Funções de Interação na Window (Globais)
         window.curtirPost = async function(idDoPost) {
             const documentoRef = doc(db, "posts", idDoPost);
             const chaveLocal = `curtido_${idDoPost}`;
-            const jaCurtido = localStorage.getItem(chaveLocal);
-
-            if (!jaCurtido) {
+            if (!localStorage.getItem(chaveLocal)) {
                 await updateDoc(documentoRef, { curtidas: increment(1) });
                 localStorage.setItem(chaveLocal, "true");
             } else {
                 await updateDoc(documentoRef, { curtidas: increment(-1) });
                 localStorage.removeItem(chaveLocal);
             }
-        }
+        };
 
         window.votarEnquete = async function(idDoPost, numeroOpcao) {
-            const documentoRef = doc(db, "posts", idDoPost);
             const chaveEnquete = `votado_${idDoPost}`;
-            const jaVotou = localStorage.getItem(chaveEnquete);
-
-            if (jaVotou) return alert("Você já deixou seu voto nessa enquete!");
-
-            const campoVoto = `votos${numeroOpcao}`;
-            await updateDoc(documentoRef, { [campoVoto]: increment(1) });
+            if (localStorage.getItem(chaveEnquete)) return alert("Voto já computado!");
+            await updateDoc(doc(db, "posts", idDoPost), { [`votos${numeroOpcao}`]: increment(1) });
             localStorage.setItem(chaveEnquete, "true");
-        }
-
-        window.deletarProprioPost = async function(idDoPost) {
-            if (!confirm("Tem certeza que deseja apagar a sua postagem?")) return;
-            await deleteDoc(doc(db, "posts", idDoPost));
-        }
+        };
 
         window.alternarComentarios = function(idDoPost) {
             const divComments = document.getElementById(`box-comments-${idDoPost}`);
@@ -402,7 +457,7 @@
                 divComments.style.display = 'flex';
                 ouvirComentarios(idDoPost);
             }
-        }
+        };
 
         window.enviarComentario = async function(idDoPost) {
             const input = document.getElementById(`input-coment-${idDoPost}`);
@@ -417,49 +472,91 @@
                 conteudo: texto,
                 dataCriacao: new Date()
             });
-
-            await updateDoc(doc(db, "posts", idDoPost), {
-                qtdRespostas: increment(1)
-            });
-
+            await updateDoc(doc(db, "posts", idDoPost), { qtdRespostas: increment(1) });
             input.value = '';
-        }
+        };
 
+        window.alternarFollow = async function(alvoUid) {
+            const me = auth.currentUser.uid;
+            if (me === alvoUid) return alert("Você não pode seguir a si mesmo!");
+            
+            const followDocId = `${me}_${alvoUid}`;
+            const followRef = doc(db, "seguidores", followDocId);
+            const docSnap = await getDoc(followRef);
+
+            if(docSnap.exists()) {
+                await deleteDoc(followRef);
+            } else {
+                await setDoc(followRef, { seguidor: me, seguindo: alvoUid });
+            }
+            carregarSeguidores();
+        };
+
+        window.deletarProprioPost = async function(idDoPost) {
+            if (confirm("Deseja apagar sua publicação?")) await deleteDoc(doc(db, "posts", idDoPost));
+        };
+
+        window.filtrarPorHashtag = function(tag) {
+            document.getElementById('campoBusca').value = tag;
+            termoPesquisa = tag.toLowerCase();
+            renderizarFeed();
+        };
+
+        // Escutas do Banco de Dados
         function ouvirComentarios(idDoPost) {
             const q = query(collection(db, "posts", idDoPost, "respostas"), orderBy("dataCriacao", "asc"));
             onSnapshot(q, (snapshot) => {
                 const container = document.getElementById(`list-coment-${idDoPost}`);
                 container.innerHTML = '';
                 snapshot.forEach((subDoc) => {
-                    const dados = subDoc.data();
                     container.insertAdjacentHTML('beforeend', `
                         <div class="comment-box">
-                            <div><font>${dados.autor}:</font><span>${dados.conteudo}</span></div>
+                            <div><font>${subDoc.data().autor}:</font><span>${formatarTexto(subDoc.data().conteudo)}</span></div>
                         </div>
                     `);
                 });
             });
         }
 
-        function ouvirUsuariosEFeed() {
+        // Sistema de busca em tempo real
+        document.getElementById('campoBusca').addEventListener('input', (e) => {
+            termoPesquisa = e.target.value.toLowerCase().trim();
+            renderizarFeed();
+        });
+
+        // Formatador dinâmico de Hashtags no layout
+        function formatarTexto(texto) {
+            if(!texto) return "";
+            return texto.replace(/#(\w+)/g, '<span class="hashtag" onclick="filtrarPorHashtag(\'#$1\')">#$1</span>');
+        }
+
+        async function carregarDadosIniciais() {
             onSnapshot(collection(db, "usuarios"), (snapshot) => {
                 snapshot.forEach((docSnap) => {
                     dadosUsuariosCache[docSnap.id] = docSnap.data();
                 });
-                renderizarFeed();
+                caruqeSeguidoresSempreAtivo();
             });
         }
 
-        window.painelModeracao = async function(idDoPost, autorPost) {
-            if (autorPost === 'drwwelias') return alert("Ação recusada! Perfil protegido.");
-            const acao = prompt("Painel de Moderação:\n1 - Ocultar\n2 - Excluir permanente");
-            if (acao === "1") await updateDoc(doc(db, "posts", idDoPost), { oculto: true });
-            if (acao === "2") await deleteDoc(doc(db, "posts", idDoPost));
+        function caruqeSeguidoresSempreAtivo() {
+            onSnapshot(collection(db, "seguidores"), () => {
+                carregarSeguidores();
+            });
+        }
+
+        async function carregarSeguidores() {
+            const me = auth.currentUser.uid;
+            const q = query(collection(db, "seguidores"), where("seguidor", "==", me));
+            const snapshot = await getDocs(q);
+            listaSeguindoCache = [];
+            snapshot.forEach(d => listaSeguindoCache.push(d.data().seguindo));
+            renderizarFeed();
         }
 
         function renderizarFeed() {
             const q = query(collection(db, "posts"), orderBy("dataCriacao", "desc"));
-            onSnapshot(q, (snapshot) => {
+            onSnapshot(q, async (snapshot) => {
                 const listaPosts = document.getElementById('listaPosts');
                 listaPosts.innerHTML = ''; 
                 
@@ -467,93 +564,97 @@
                 const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "";
                 const ehModerador = (emaiLogado === "drwwelias@gmail.com");
 
+                // Processar totais de followers para exibição nos perfis em tempo real
+                const todosSeguidores = await getDocs(collection(db, "seguidores"));
+                let contagemSeguidores = {};
+                let contagemSeguindo = {};
+                todosSeguidores.forEach(f => {
+                    const d = f.data();
+                    contagemSeguidores[d.seguindo] = (contagemSeguidores[d.seguindo] || 0) + 1;
+                    contagemSeguindo[d.seguidor] = (contagemSeguindo[d.seguidor] || 0) + 1;
+                });
+
                 snapshot.forEach((docSnapshot) => {
                     const id = docSnapshot.id;
                     const item = docSnapshot.data();
 
-                    if (item.oculto === true && !ehModerador) return;
+                    if (item.oculto && !ehModerador) return;
 
                     const userMeta = dadosUsuariosCache[item.autorUid] || {};
                     const nomeExibicao = userMeta.nome || item.autor || "Usuário";
-                    const descExibicao = userMeta.descricao || "Membro do DrwwHost";
+                    const descExibicao = userMeta.descricao || "Membro da rede";
                     
-                    let avatarHtml = `<span class="avatar">${nomeExibicao[0].toUpperCase()}</span>`;
-                    if (userMeta.fotoPerfil) {
-                        avatarHtml = `<img src="${userMeta.fotoPerfil}" class="avatar-img">`;
+                    // Validador de filtros de pesquisa (texto e hashtag)
+                    if (termoPesquisa) {
+                        const noTexto = item.conteudo ? item.conteudo.toLowerCase().includes(termoPesquisa) : false;
+                        const noNome = nomeExibicao.toLowerCase().includes(termoPesquisa);
+                        const naBio = descExibicao.toLowerCase().includes(termoPesquisa);
+                        if (!noTexto && !noNome && !naBio) return;
                     }
 
-                    const estiloOculto = item.oculto ? 'style="opacity: 0.5; border: 2px dashed red;"' : '';
-                    const avisoOculto = item.oculto ? '<span style="color:red; font-size:12px; font-weight:bold;">[OCULTADO]</span>' : '';
+                    let avatarHtml = `<span class="avatar">${nomeExibicao[0].toUpperCase()}</span>`;
+                    if (userMeta.fotoPerfil) avatarHtml = `<img src="${userMeta.fotoPerfil}" class="avatar-img">`;
+
+                    // Botão de Seguir Inteligente
+                    let botaoFollow = "";
+                    if(auth.currentUser && item.autorUid !== auth.currentUser.uid) {
+                        const jaSegue = listaSeguindoCache.includes(item.autorUid);
+                        botaoFollow = `<button class="btn-follow ${jaSegue ? 'following' : ''}" onclick="alternarFollow('${item.autorUid}')">${jaSegue ? 'Seguindo' : 'Seguir'}</button>`;
+                    }
+
+                    const nSeguidores = contagemSeguidores[item.autorUid] || 0;
+                    const nSeguindo = contagemSeguindo[item.autorUid] || 0;
 
                     let botaoDireito = '';
                     if (item.autor === usuarioLogado) {
-                        botaoDireito = `<button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:16px;">delete_outline</span> Apagar</button>`;
-                    } else if (ehModerador) {
-                        botaoDireito = `<button class="btn-moderador" onclick="painelModeracao('${id}', '${item.autor}')"><span class="material-icons" style="font-size:14px;">gavel</span> Moderar</button>`;
+                        botaoDireito = `<button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:16px;">delete_outline</span></button>`;
                     }
 
                     let mioloHtml = '';
-
                     if (item.tipo === 'enquete') {
-                        const v1 = Number(item.votos1) || 0;
-                        const v2 = Number(item.votos2) || 0;
-                        const v3 = Number(item.votos3) || 0;
+                        const v1 = Number(item.votos1) || 0, v2 = Number(item.votos2) || 0, v3 = Number(item.votos3) || 0;
                         const totalVotos = v1 + v2 + v3;
-                        const calcPct = (v) => totalVotos <= 0 ? 0 : Math.round((v / totalVotos) * 100);
-
-                        let htmlOpcao3 = '';
-                        if(item.opcao3) {
-                            htmlOpcao3 = `<div class="poll-option" onclick="votarEnquete('${id}', 3)"><div class="poll-bar" style="width: ${calcPct(v3)}%"></div><span class="poll-text">${item.opcao3}</span><span class="poll-text">${calcPct(v3)}% (${v3})</span></div>`;
-                        }
+                        const pct = (v) => totalVotos <= 0 ? 0 : Math.round((v / totalVotos) * 100);
 
                         mioloHtml = `
-                            <div class="post-content" style="font-weight:600; font-size:16px;">${item.conteudo}</div>
+                            <div class="post-content" style="font-weight:600;">${formatarTexto(item.conteudo)}</div>
                             <div class="poll-box">
-                                <div class="poll-option" onclick="votarEnquete('${id}', 1)"><div class="poll-bar" style="width: ${calcPct(v1)}%"></div><span class="poll-text">${item.opcao1 || "Opção 1"}</span><span class="poll-text">${calcPct(v1)}% (${v1})</span></div>
-                                <div class="poll-option" onclick="votarEnquete('${id}', 2)"><div class="poll-bar" style="width: ${calcPct(v2)}%"></div><span class="poll-text">${item.opcao2 || "Opção 2"}</span><span class="poll-text">${calcPct(v2)}% (${v2})</span></div>
-                                ${htmlOpcao3}
+                                <div class="poll-option" onclick="votarEnquete('${id}', 1)"><div class="poll-bar" style="width: ${pct(v1)}%"></div><span class="poll-text">${item.opcao1}</span><span class="poll-text">${pct(v1)}%</span></div>
+                                <div class="poll-option" onclick="votarEnquete('${id}', 2)"><div class="poll-bar" style="width: ${pct(v2)}%"></div><span class="poll-text">${item.opcao2}</span><span class="poll-text">${pct(v2)}%</span></div>
+                                ${item.opcao3 ? `<div class="poll-option" onclick="votarEnquete('${id}', 3)"><div class="poll-bar" style="width: ${pct(v3)}%"></div><span class="poll-text">${item.opcao3}</span><span class="poll-text">${pct(v3)}%</span></div>` : ''}
                             </div>
-                            <div style="font-size:12px; color:var(--text-sub); text-align:right;">Total de votos: ${totalVotos}</div>
                         `;
                     } else {
-                        const tagImagem = item.fotoUrl ? `<img src="${item.fotoUrl}" class="post-image">` : '';
-                        mioloHtml = `<div class="post-content"><p>${item.conteudo}</p>${tagImagem}</div>`;
+                        mioloHtml = `<div class="post-content"><p>${formatarTexto(item.conteudo)}</p>${item.fotoUrl ? `<img src="${item.fotoUrl}" class="post-image">` : ''}</div>`;
                     }
 
-                    const estruturaCard = `
-                        <div class="post-card" ${estiloOculto}>
+                    listaPosts.insertAdjacentHTML('beforeend', `
+                        <div class="post-card">
                             <div class="post-author">
                                 ${avatarHtml}
                                 <div class="author-info">
-                                    <div>${nomeExibicao} ${avisoOculto}</div>
-                                    <div class="author-desc">${descExibicao}</div>
-                                </div>
-                            </div>
-                            
-                            ${mioloHtml}
-                            
-                            <div class="post-actions">
-                                <div class="action-group">
-                                    <button class="action-btn" onclick="curtirPost('${id}')">
-                                        <span class="material-icons" style="font-size:18px;">thumb_up</span> (${item.curtidas || 0})
-                                    </button>
-                                    <button class="action-btn" onclick="alternarComentarios('${id}')">
-                                        <span class="material-icons" style="font-size:18px;">forum</span> Respostas (${item.qtdRespostas || 0})
-                                    </button>
+                                    <div style="display:flex; align-items:center; gap:8px;"><span>${nomeExibicao}</span>${botaoFollow}</div>
+                                    <div class="author-desc">${formatarTexto(descExibicao)}</div>
+                                    <div class="stats-text">${nSeguidores} seguidores • ${nSeguindo} seguindo</div>
                                 </div>
                                 ${botaoDireito}
                             </div>
-
+                            ${mioloHtml}
+                            <div class="post-actions">
+                                <div class="action-group">
+                                    <button class="action-btn" onclick="curtirPost('${id}')"><span class="material-icons" style="font-size:18px;">thumb_up</span> (${item.curtidas || 0})</button>
+                                    <button class="action-btn" onclick="alternarComentarios('${id}')"><span class="material-icons" style="font-size:18px;">forum</span> Respostas (${item.qtdRespostas || 0})</button>
+                                </div>
+                            </div>
                             <div class="comments-section" id="box-comments-${id}">
                                 <div class="comment-input-group">
-                                    <input type="text" id="input-coment-${id}" placeholder="Escreva uma resposta de zoeira...">
-                                    <button onclick="enviarComentario('${id}')">Responder</button>
+                                    <input type="text" id="input-coment-${id}" placeholder="Escreva uma resposta...">
+                                    <button onclick="enviarComentario('${id}')">Enviar</button>
                                 </div>
                                 <div id="list-coment-${id}" style="display:flex; flex-direction:column; gap:6px; margin-top:5px;"></div>
                             </div>
                         </div>
-                    `;
-                    listaPosts.insertAdjacentHTML('beforeend', estruturaCard);
+                    `);
                 });
             });
         }
