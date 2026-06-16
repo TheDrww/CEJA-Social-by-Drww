@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEJA Social</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .login-container { background: #ffffff; width: 100%; max-width: 400px; padding: 40px 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); text-align: center; display: block; }
+        .logo-icon { font-size: 70px; color: #3f51b5; margin-bottom: 10px; }
+        h1 { color: #3f51b5; font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        p.subtitle { color: #64748b; font-size: 14px; margin-bottom: 35px; }
+        .input-group { position: relative; margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 13px; font-weight: 500; color: #475569; margin-bottom: 6px; }
+        .input-wrapper { position: relative; }
+        .input-wrapper span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 20px; }
+        .input-wrapper input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; }
+        .btn-primary { width: 100%; padding: 14px; background-color: #3f51b5; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-primary:hover { background-color: #303f9f; }
+        .btn-secondary { background: none; border: none; color: #3f51b5; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 25px; }
+        .btn-secondary:hover { text-decoration: underline; }
+        .feed-container { width: 100%; max-width: 600px; display: none; flex-direction: column; gap: 20px; align-self: flex-start; }
+        .feed-header { background: #ffffff; padding: 16px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; }
+        .feed-header h2 { color: #3f51b5; font-size: 22px; font-weight: 700; }
+        .btn-logout { background: none; border: none; color: #ef4444; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 500; }
+        .create-box { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; }
+        .create-box textarea { width: 100%; min-height: 70px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; resize: none; font-size: 15px; outline: none; }
+        .create-box input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; outline: none; }
+        .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
+        .tab-btn { background: #f1f5f9; border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: #475569; }
+        .tab-btn.active { background: #3f51b5; color: white; }
+        .posts-list { display: flex; flex-direction: column; gap: 16px; }
+        .post-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .post-author { display: flex; align-items: center; gap: 10px; font-weight: 600; color: #1e293b; font-size: 15px; }
+        .post-author span.avatar { background: #e2e8f0; color: #475569; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
+        .post-content { color: #334155; font-size: 15px; line-height: 1.5; }
+        .post-image { width: 100%; max-height: 380px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: block; }
+        .post-actions { border-top: 1px solid #f1f5f9; padding-top: 10px; display: flex; gap: 20px; justify-content: space-between; align-items: center; }
+        .action-group { display: flex; gap: 20px; }
+        .action-btn { background: none; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
+        .action-btn:hover { color: #3f51b5; }
+        .btn-moderador { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .btn-moderador:hover { background: #fee2e2; }
+        .btn-apagar-proprio { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
+        .btn-apagar-proprio:hover { color: #ef4444; }
+        .poll-box { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .poll-option { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; position: relative; cursor: pointer; overflow: hidden; display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; }
+        .poll-bar { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(63, 81, 181, 0.1); transition: width 0.3s ease; z-index: 1; }
+        .poll-text { z-index: 2; position: relative; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container" id="telaLogin">
+        <span class="material-icons logo-icon">groups</span>
+        <h1>CEJA Social</h1>
+        <p class="subtitle">A rede social da nossa escola</p>
+        <form id="loginForm">
+            <div class="input-group"><label>E-mail Escolar</label><div class="input-wrapper"><span class="material-icons">person</span><input type="email" id="email" placeholder="seu-email@escola.com" required></div></div>
+            <div class="input-group"><label>Senha</label><div class="input-wrapper"><span class="material-icons">lock</span><input type="password" id="password" placeholder="Sua senha" required></div></div>
+            <button type="button" class="btn-primary" id="btnEntrar">Entrar</button>
+        </form>
+        <button class="btn-secondary" id="btnCadastrar">Novo por aqui? Crie sua conta escolar</button>
+    </div>
+
+    <div class="feed-container" id="telaFeed">
+        <div class="feed-header">
+            <h2>CEJA Social</h2>
+            <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span> Sair</button>
+        </div>
+
+        <div class="create-box">
+            <div class="tab-menu">
+                <button class="tab-btn active" id="tabPost">Texto/Foto</button>
+                <button class="tab-btn" id="tabEnquete">Nova Enquete</button>
+            </div>
+            
+            <div id="formPost">
+                <textarea id="postTexto" placeholder="Faça uma pergunta acadêmica ou compartilhe algo..."></textarea>
+                <input type="text" id="postFotoUrl" placeholder="Link de uma foto da internet (opcional)" style="margin-top: 8px;">
+            </div>
+
+            <div id="formEnquete" style="display: none; flex-direction: column; gap: 8px;">
+                <input type="text" id="enquetePergunta" placeholder="Qual a sua pergunta para a enquete?">
+                <input type="text" id="enqueteOpcao1" placeholder="Opção 1">
+                <input type="text" id="enqueteOpcao2" placeholder="Opção 2">
+                <input type="text" id="enqueteOpcao3" placeholder="Opção 3 (Opcional)">
+            </div>
+
+            <button class="btn-primary" id="btnPublicar" style="margin-top:5px;">Compartilhar no CEJA</button>
+        </div>
+
+        <div class="posts-list" id="listaPosts"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAKLujheHxFPWqGdufXCDFrF33Uuvvenw",
+            authDomain: "ceja-social.firebaseapp.com",
+            projectId: "ceja-social",
+            storageBucket: "ceja-social.firebasestorage.app",
+            messagingSenderId: "646727379653",
+            appId: "1:646727379653:web:d0088d6c4d6386ac23deac",
+            measurementId: "G-GP25J0T792"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let modoAtual = 'post';
+
+        document.getElementById('tabPost').addEventListener('click', (e) => {
+            modoAtual = 'post';
+            e.target.classList.add('active');
+            document.getElementById('tabEnquete').classList.remove('active');
+            document.getElementById('formPost').style.display = 'block';
+            document.getElementById('formEnquete').style.display = 'none';
+        });
+
+        document.getElementById('tabEnquete').addEventListener('click', (e) => {
+            modoAtual = 'enquete';
+            e.target.classList.add('active');
+            document.getElementById('tabPost').classList.remove('active');
+            document.getElementById('formPost').style.display = 'none';
+            document.getElementById('formEnquete').style.display = 'flex';
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('telaLogin').style.display = 'none';
+                document.getElementById('telaFeed').style.display = 'flex';
+                document.body.style.alignItems = 'flex-start';
+                ouvirBanco();
+            } else {
+                document.getElementById('telaLogin').style.display = 'block';
+                document.getElementById('telaFeed').style.display = 'none';
+                document.body.style.alignItems = 'center';
+            }
+        });
+
+        document.getElementById('btnCadastrar').addEventListener('click', () => {
+            createUserWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value).catch(e => alert(e.message));
+        });
+        document.getElementById('btnEntrar').addEventListener('click', () => {
+            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value).catch(e => alert(e.message));
+        });
+        document.getElementById('btnSair').addEventListener('click', () => signOut(auth));
+
+        document.getElementById('btnPublicar').addEventListener('click', async () => {
+            const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "Usuário";
+
+            if (modoAtual === 'post') {
+                const texto = document.getElementById('postTexto').value.trim();
+                const foto = document.getElementById('postFotoUrl').value.trim();
+                if(!texto) return alert("Escreva algo antes de postar!");
+
+                await addDoc(collection(db, "posts"), {
+                    tipo: 'post',
+                    autor: usuarioLogado,
+                    conteudo: texto,
+                    fotoUrl: foto,
+                    curtidas: 0,
+                    oculto: false,
+                    dataCriacao: new Date()
+                });
+                document.getElementById('postTexto').value = '';
+                document.getElementById('postFotoUrl').value = '';
+            } else {
+                const pergunta = document.getElementById('enquetePergunta').value.trim();
+                const op1 = document.getElementById('enqueteOpcao1').value.trim();
+                const op2 = document.getElementById('enqueteOpcao2').value.trim();
+                const op3 = document.getElementById('enqueteOpcao3').value.trim();
+
+                if(!pergunta || !op1 || !op2) return alert("Preencha a pergunta e pelo menos duas opções!");
+
+                await addDoc(collection(db, "posts"), {
+                    tipo: 'enquete',
+                    autor: usuarioLogado,
+                    conteudo: pergunta,
+                    opcao1: op1, votos1: 0,
+                    opcao2: op2, votos2: 0,
+                    opcao3: op3 || null, votos3: 0,
+                    curtidas: 0, 
+                    oculto: false,
+                    dataCriacao: new Date()
+                });
+                document.getElementById('enquetePergunta').value = '';
+                document.getElementById('enqueteOpcao1').value = '';
+                document.getElementById('enqueteOpcao2').value = '';
+                document.getElementById('enqueteOpcao3').value = '';
+            }
+        });
+
+        window.curtirPost = async function(idDoPost) {
+            const documentoRef = doc(db, "posts", idDoPost);
+            const chaveLocal = `curtido_${idDoPost}`;
+            const jaCurtido = localStorage.getItem(chaveLocal);
+
+            if (!jaCurtido) {
+                await updateDoc(documentoRef, { curtidas: increment(1) });
+                localStorage.setItem(chaveLocal, "true");
+            } else {
+                await updateDoc(documentoRef, { curtidas: increment(-1) });
+                localStorage.removeItem(chaveLocal);
+            }
+        }
+
+        window.votarEnquete = async function(idDoPost, numeroOpcao) {
+            const documentoRef = doc(db, "posts", idDoPost);
+            const chaveEnquete = `votado_${idDoPost}`;
+            const jaVotou = localStorage.getItem(chaveEnquete);
+
+            if (jaVotou) {
+                alert("Você já deixou seu voto nessa enquete! Sem trapacear kkk.");
+                return;
+            }
+
+            const campoVoto = `votos${numeroOpcao}`;
+            try {
+                await updateDoc(documentoRef, { [campoVoto]: increment(1) });
+                localStorage.setItem(chaveEnquete, "true");
+            } catch (error) {
+                alert("Erro ao computar voto: " + error.message);
+            }
+        }
+
+        window.deletarProprioPost = async function(idDoPost) {
+            const confirmar = confirm("Tem certeza que deseja apagar a sua postagem? Essa ação não pode ser desfeita.");
+            if (!confirmar) return;
+
+            try {
+                await deleteDoc(doc(db, "posts", idDoPost));
+                alert("Postagem deletada com sucesso!");
+            } catch (err) {
+                alert("Erro ao apagar postagem: " + err.message);
+            }
+        }
+
+        window.painelModeracao = async function(idDoPost, autorPost) {
+            if (autorPost === 'drwwelias') {
+                alert("Ação recusada! Suas próprias postagens são protegidas e nunca podem ser derrubadas.");
+                return;
+            }
+
+            const acao = prompt("Painel de Moderação CEJA:\nDigite 1 para OCULTAR TEMPORARIAMENTE\nDigite 2 para EXCLUIR PARA SEMPRE\nDigite 0 para Cancelar");
+            if (acao !== "1" && acao !== "2") return;
+
+            const darStrike = confirm(`Deseja aplicar 1 STRIKE no usuário @${autorPost}?`);
+            const documentoRef = doc(db, "posts", idDoPost);
+
+            try {
+                if (acao === "1") {
+                    await updateDoc(documentoRef, { oculto: true });
+                    alert("A postagem foi ocultada do feed temporariamente!");
+                } else if (acao === "2") {
+                    await deleteDoc(documentoRef);
+                    alert("A postagem foi excluída do banco de dados para sempre!");
+                }
+
+                if (darStrike) {
+                    await addDoc(collection(db, "strikes"), {
+                        usuarioPunido: autorPost,
+                        dataStrike: new Date(),
+                        motivo: "Violação das diretrizes da comunidade CEJA"
+                    });
+                    alert(`Strike registrado com sucesso para @${autorPost}!`);
+                }
+            } catch (err) {
+                alert("Erro ao executar ação de moderador: " + err.message);
+            }
+        }
+
+        function ouvirBanco() {
+            const q = query(collection(db, "posts"), orderBy("dataCriacao", "desc"));
+            
+            onSnapshot(q, (snapshot) => {
+                const listaPosts = document.getElementById('listaPosts');
+                listaPosts.innerHTML = ''; 
+                
+                const emaiLogado = auth.currentUser ? auth.currentUser.email : "";
+                const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "";
+                const ehModerador = (emaiLogado === "drwwelias@gmail.com");
+
+                snapshot.forEach((docSnapshot) => {
+                    const id = docSnapshot.id;
+                    const item = docSnapshot.data();
+
+                    if (item.oculto === true && !ehModerador) return;
+
+                    const inicial = item.autor ? item.autor[0].toUpperCase() : 'U';
+                    const estiloOculto = item.oculto ? 'style="opacity: 0.5; border: 2px dashed red;"' : '';
+                    const avisoOculto = item.oculto ? '<span style="color:red; font-size:12px; font-weight:bold;">[OCULTADO TEMPORARIAMENTE]</span>' : '';
+
+                    let botaoDireito = '';
+                    if (item.autor === usuarioLogado) {
+                        botaoDireito = `
+                            <button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')">
+                                <span class="material-icons" style="font-size:16px;">delete_outline</span> Apagar
+                            </button>
+                        `;
+                    } else if (ehModerador) {
+                        botaoDireito = `
+                            <button class="btn-moderador" onclick="painelModeracao('${id}', '${item.autor}')">
+                                <span class="material-icons" style="font-size:14px;">gavel</span> Moderar
+                            </button>
+                        `;
+                    }
+
+                    if (item.tipo === 'enquete') {
+                        const v1 = Number(item.votos1) || 0;
+                        const v2 = Number(item.votos2) || 0;
+                        const v3 = Number(item.votos3) || 0;
+                        const totalVotos = v1 + v2 + v3;
+
+                        const calcPct = (votosOpcao) => {
+                            if (totalVotos <= 0 || !votosOpcao) return 0;
+                            return Math.round((votosOpcao / totalVotos) * 100);
+                        };
+
+                        const textoOp1 = item.opcao1 || "Opção 1";
+                        const textoOp2 = item.opcao2 || "Opção 2";
+                        const textoOp3 = item.opcao3 || null;
+
+                        let htmlOpcao3 = '';
+                        if(textoOp3) {
+                            htmlOpcao3 = `
+                                <div class="poll-option" onclick="votarEnquete('${id}', 3)">
+                                    <div class="poll-bar" style="width: ${calcPct(v3)}%"></div>
+                                    <span class="poll-text">${textoOp3}</span>
+                                    <span class="poll-text">${calcPct(v3)}% (${v3})</span>
+                                </div>
+                            `;
+                        }
+
+                        const enqueteHtml = `
+                            <div class="post-card" ${estiloOculto}>
+                                <div class="post-author"><span class="avatar">${inicial}</span><div>${item.autor} <span style="font-weight:400; color:#64748b; font-size:12px;">(Criou uma enquete)</span> ${avisoOculto}</div></div>
+                                <div class="post-content" style="font-weight:600; font-size:16px;">${item.conteudo}</div>
+                                <div class="poll-box">
+                                    <div class="poll-option" onclick="votarEnquete('${id}', 1)">
+                                        <div class="poll-bar" style="width: ${calcPct(v1)}%"></div>
+                                        <span class="poll-text">${textoOp1}</span>
+                                        <span class="poll-text">${calcPct(v1)}% (${v1})</span>
+                                    </div>
+                                    <div class="poll-option" onclick="votarEnquete('${id}', 2)">
+                                        <div class="poll-bar" style="width: ${calcPct(v2)}%"></div>
+                                        <span class="poll-text">${textoOp2}</span>
+                                        <span class="poll-text">${calcPct(v2)}% (${v2})</span>
+                                    </div>
+                                    ${htmlOpcao3}
+                                </div>
+                                <div style="font-size:12px; color:#64748b; text-align:right; margin-top:5px; margin-bottom: 5px;">Total de votos: ${totalVotos}</div>
+                                
+                                <div class="post-actions">
+                                    <div class="action-group">
+                                        <button class="action-btn" onclick="curtirPost('${id}')">
+                                            <span class="material-icons" style="font-size:18px; color:#3f51b5;">thumb_up</span> Curtir Enquete (${item.curtidas || 0})
+                                        </button>
+                                    </div>
+                                    ${botaoDireito}
+                                </div>
+                            </div>
+                        `;
+                        listaPosts.insertAdjacentHTML('beforeend', enqueteHtml);
+                    } else {
+                        const tagImagem = item.fotoUrl ? `<img src="${item.fotoUrl}" class="post-image">` : '';
+                        const postHtml = `
+                            <div class="post-card" ${estiloOculto}>
+                                <div class="post-author"><span class="avatar">${inicial}</span><div>${item.autor} ${avisoOculto}</div></div>
+                                <div class="post-content"><p>${item.conteudo}</p>${tagImagem}</div>
+                                <div class="post-actions">
+                                    <div class="action-group">
+                                        <button class="action-btn" onclick="curtirPost('${id}')">
+                                            <span class="material-icons" style="font-size:18px; color:#3f51b5;">thumb_up</span> Curtir (${item.curtidas || 0})
+                                        </button>
+                                    </div>
+                                    ${botaoDireito}
+                                </div>
+                            </div>
+                        `;
+                        listaPosts.insertAdjacentHTML('beforeend', postHtml);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
