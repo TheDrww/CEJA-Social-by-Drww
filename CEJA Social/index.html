@@ -103,7 +103,7 @@
         .comment-input-group input { flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 6px; font-size: 13px; outline: none; }
         .comment-input-group button { background: var(--primary); color: white; border: none; padding: 0 12px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
 
-        /* Modais Flutuantes (Configuração e Publicação) */
+        /* Modais Flutuantes (Configuração, Publicação e Termos) */
         .modal-floating { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg-card); width: 100%; max-width: 480px; padding: 25px; border-radius: 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
@@ -116,6 +116,11 @@
         .create-box-content textarea { width: 100%; min-height: 90px; padding: 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; resize: none; font-size: 15px; outline: none; }
         .create-box-content input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 14px; outline: none; }
         .file-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-top: 4px; }
+
+        /* Estilo do bloco de créditos */
+        .creditos-box { background: var(--bg-body); border: 1px dashed var(--border-color); padding: 12px; border-radius: 8px; margin-top: 5px; font-size: 13px; line-height: 1.4; }
+        .creditos-box a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        .creditos-box a:hover { text-decoration: underline; }
 
         /* Barra de Navegação Inferior (Estilo Mobile App) */
         .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 10px 0; justify-content: space-around; align-items: center; z-index: 90; box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
@@ -148,6 +153,7 @@
             <div class="header-top">
                 <h2>TheLibertyPage</h2>
                 <div class="header-actions">
+                    <button class="icon-btn" id="btnInfo" title="Termos e Créditos"><span class="material-icons">help_outline</span></button>
                     <button class="icon-btn" id="btnDarkMode" title="Alternar Tema"><span class="material-icons">dark_mode</span></button>
                     <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span></button>
                 </div>
@@ -219,6 +225,27 @@
         </div>
     </div>
 
+    <div class="modal-floating" id="modalInfo">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Aviso Legal e Créditos</h3>
+                <button class="icon-btn" id="btnFecharInfo"><span class="material-icons">close</span></button>
+            </div>
+            <div style="font-size: 14px; line-height: 1.5; color: var(--text-main); display: flex; flex-direction: column; gap: 12px;">
+                <p style="font-weight: 600; color: #ef4444;">⚠️ Isenção de Responsabilidade:</p>
+                <p>A <strong>DrwwHost</strong> é apenas a provedora da infraestrutura e hospedagem desta página. A DrwwHost não monitora previamente o conteúdo e <strong>não se responsabiliza por quaisquer atos criminosos</strong>, publicações ilícitas, calúnias ou uso indevido do sistema praticado por seus usuários. Cada indivíduo é integralmente responsável civil e criminalmente por aquilo que publica.</p>
+                
+                <p style="font-weight: 600; margin-top: 8px; color: var(--primary);">💻 Desenvolvimento & Créditos:</p>
+                <div class="creditos-box">
+                    <strong>Desenvolvedor:</strong> André Elias (Drww)<br>
+                    <strong>Contato:</strong> <a href="mailto:drwwelias@gmail.com">drwwelias@gmail.com</a><br>
+                    <strong>GitHub:</strong> <a href="https://github.com/Drww" target="_blank">github.com/Drww</a>
+                </div>
+            </div>
+            <button class="btn-primary" id="btnEntendidoInfo">Entendido</button>
+        </div>
+    </div>
+
     <div class="bottom-nav" id="barraNavegacao">
         <button class="nav-item active" id="navHome">
             <span class="material-icons">home</span>Início
@@ -257,7 +284,6 @@
         let listaSeguindoCache = [];
         let termoPesquisa = "";
 
-        // Tema Escuro
         if (localStorage.getItem('temaEscuro') === 'true') {
             document.body.classList.add('dark-mode');
         }
@@ -266,9 +292,13 @@
             localStorage.setItem('temaEscuro', document.body.classList.contains('dark-mode'));
         });
 
-        // Modais de Controle
         const modalPublicar = document.getElementById('modalPublicar');
         const modalConfig = document.getElementById('modalConfig');
+        const modalInfo = document.getElementById('modalInfo');
+
+        document.getElementById('btnInfo').addEventListener('click', () => modalInfo.style.display = 'flex');
+        document.getElementById('btnFecharInfo').addEventListener('click', () => modalInfo.style.display = 'none');
+        document.getElementById('btnEntendidoInfo').addEventListener('click', () => modalInfo.style.display = 'none');
 
         document.getElementById('navAdd').addEventListener('click', () => {
             modalPublicar.style.display = 'flex';
@@ -297,7 +327,6 @@
             renderizarFeed();
         });
 
-        // Upload local e conversão Base64
         document.getElementById('postFotoFile').addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -320,7 +349,6 @@
             reader.readAsDataURL(file);
         });
 
-        // Salvar Perfil
         document.getElementById('btnSalvarConfig').addEventListener('click', async () => {
             const user = auth.currentUser;
             if (!user) return;
@@ -339,10 +367,9 @@
             modalConfig.style.display = 'none';
             fotoPerfilBase64 = "";
             document.getElementById('statusPerfilUpload').innerText = "";
-            alert("Perfil atualizado!");
+            alert("Perfil updated!");
         });
 
-        // Alternador de Abas de Criação
         document.getElementById('tabPost').addEventListener('click', (e) => {
             modoCriacao = 'post';
             e.target.classList.add('active');
@@ -359,7 +386,6 @@
             document.getElementById('formEnquete').style.display = 'flex';
         });
 
-        // Estado de Autenticação
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('telaLogin').style.display = 'none';
@@ -383,7 +409,6 @@
         });
         document.getElementById('btnSair').addEventListener('click', () => signOut(auth));
 
-        // Publicar Postagem / Enquete
         document.getElementById('btnPublicar').addEventListener('click', async () => {
             const user = auth.currentUser;
             if(!user) return;
@@ -436,7 +461,6 @@
             modalPublicar.style.display = 'none';
         });
 
-        // Funções Globais na Window
         window.curtirPost = async function(idDoPost) {
             const documentoRef = doc(db, "posts", idDoPost);
             const chaveLocal = `curtido_${idDoPost}`;
@@ -524,7 +548,6 @@
             });
         }
 
-        // Sistema de busca em tempo real
         document.getElementById('campoBusca').addEventListener('input', (e) => {
             termoPesquisa = e.target.value.toLowerCase().trim();
             renderizarFeed();
