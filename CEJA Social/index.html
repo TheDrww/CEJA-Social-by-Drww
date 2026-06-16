@@ -85,7 +85,8 @@
         .action-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
         .action-btn:hover { color: var(--primary); }
         
-        .btn-moderador { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .btn-moderador { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-moderador:hover { background: #fee2e2; }
         .btn-apagar-proprio { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
         .btn-apagar-proprio:hover { color: #ef4444; }
         
@@ -367,7 +368,7 @@
             modalConfig.style.display = 'none';
             fotoPerfilBase64 = "";
             document.getElementById('statusPerfilUpload').innerText = "";
-            alert("Perfil updated!");
+            alert("Perfil atualizado!");
         });
 
         document.getElementById('tabPost').addEventListener('click', (e) => {
@@ -635,6 +636,8 @@
                     let botaoDireito = '';
                     if (item.autor === usuarioLogado) {
                         botaoDireito = `<button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:16px;">delete_outline</span></button>`;
+                    } else if (ehModerador) {
+                        botaoDireito = `<button class="btn-moderador" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:14px;">delete</span> Mod</button>`;
                     }
 
                     let mioloHtml = '';
