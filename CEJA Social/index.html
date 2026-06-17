@@ -66,6 +66,7 @@
         /* Cards de Post */
         .posts-list { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
         .post-card { background: var(--bg-card); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .post-card.denunciado-alerta { border: 2px dashed #ef4444; }
         .post-author { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-main); font-size: 15px; }
         .post-author img.avatar-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
         .post-author span.avatar { background: var(--border-color); color: var(--text-sub); width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
@@ -84,9 +85,15 @@
         .action-group { display: flex; gap: 16px; }
         .action-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
         .action-btn:hover { color: var(--primary); }
+        .action-btn.btn-denunciar:hover { color: #f59e0b; }
         
-        .btn-moderador { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-moderador:hover { background: #fee2e2; }
+        /* Botões de Moderação */
+        .mod-actions-area { display: flex; gap: 10px; background: rgba(239, 68, 68, 0.08); padding: 10px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2); margin-top: 5px; }
+        .btn-mod-delete { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .btn-mod-delete:hover { background: #dc2626; }
+        .btn-mod-dismiss { background: var(--border-color); color: var(--text-main); border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .btn-mod-dismiss:hover { opacity: 0.9; }
+
         .btn-apagar-proprio { background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; }
         .btn-apagar-proprio:hover { color: #ef4444; }
         
@@ -104,13 +111,12 @@
         .comment-input-group input { flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 6px; font-size: 13px; outline: none; }
         .comment-input-group button { background: var(--primary); color: white; border: none; padding: 0 12px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
 
-        /* Modais Flutuantes (Configuração, Publicação e Termos) */
+        /* Modais Flutuantes */
         .modal-floating { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg-card); width: 100%; max-width: 480px; padding: 25px; border-radius: 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         .modal-header h3 { font-size: 18px; color: var(--primary); font-weight: 700; }
         
-        /* Abas internas do criador de post */
         .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
         .tab-btn { background: var(--bg-body); border: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: pointer; font-weight: 500; color: var(--text-sub); }
         .tab-btn.active { background: var(--primary); color: white; }
@@ -118,19 +124,17 @@
         .create-box-content input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); border-radius: 8px; font-size: 14px; outline: none; }
         .file-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--primary); cursor: pointer; font-weight: 500; margin-top: 4px; }
 
-        /* Estilo do bloco de créditos */
         .creditos-box { background: var(--bg-body); border: 1px dashed var(--border-color); padding: 12px; border-radius: 8px; margin-top: 5px; font-size: 13px; line-height: 1.4; }
         .creditos-box a { color: var(--primary); font-weight: 600; text-decoration: none; }
         .creditos-box a:hover { text-decoration: underline; }
 
-        /* Barra de Navegação Inferior (Estilo Mobile App) */
+        /* Barra de Navegação Inferior */
         .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 10px 0; justify-content: space-around; align-items: center; z-index: 90; box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
         .nav-item { background: none; border: none; color: var(--text-sub); cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 500; gap: 2px; }
         .nav-item.active, .nav-item:hover { color: var(--primary); }
         .nav-item.btn-add-center { background: var(--primary); color: white !important; width: 48px; height: 48px; border-radius: 50%; justify-content: center; transform: translateY(-5px); box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3); }
         .nav-item.btn-add-center:hover { background: var(--primary-hover); }
         
-        /* Highlight de Hashtag */
         .hashtag { color: var(--primary); font-weight: 600; cursor: pointer; }
         .hashtag:hover { text-decoration: underline; }
     </style>
@@ -152,14 +156,14 @@
     <div class="feed-container" id="telaFeed">
         <div class="feed-header">
             <div class="header-top">
-                <h2>TheLibertyPage</h2>
+                <h2 id="tituloFeedPrincipal">TheLibertyPage</h2>
                 <div class="header-actions">
                     <button class="icon-btn" id="btnInfo" title="Termos e Créditos"><span class="material-icons">help_outline</span></button>
                     <button class="icon-btn" id="btnDarkMode" title="Alternar Tema"><span class="material-icons">dark_mode</span></button>
                     <button class="btn-logout" id="btnSair"><span class="material-icons">logout</span></button>
                 </div>
             </div>
-            <div class="search-wrapper">
+            <div class="search-wrapper" id="wrapperBuscaFeed">
                 <span class="material-icons">search</span>
                 <input type="text" id="campoBusca" placeholder="Pesquisar por texto ou #hashtag...">
             </div>
@@ -254,6 +258,9 @@
         <button class="nav-item btn-add-center" id="navAdd" title="Criar Post">
             <span class="material-icons" style="font-size: 28px;">add</span>
         </button>
+        <button class="nav-item" id="navMod" style="display: none; color: #ef4444;">
+            <span class="material-icons">gavel</span>Moderação
+        </button>
         <button class="nav-item" id="navPerfil">
             <span class="material-icons">person</span>Perfil
         </button>
@@ -284,6 +291,7 @@
         let dadosUsuariosCache = {};
         let listaSeguindoCache = [];
         let termoPesquisa = "";
+        let visualizacaoAtual = "feed"; // "feed" ou "moderacao"
 
         if (localStorage.getItem('temaEscuro') === 'true') {
             document.body.classList.add('dark-mode');
@@ -322,9 +330,25 @@
         document.getElementById('btnFecharConfig').addEventListener('click', () => {
             modalConfig.style.display = 'none';
         });
+
+        // Alternância de Telas
         document.getElementById('navHome').addEventListener('click', () => {
+            visualizacaoAtual = "feed";
+            document.getElementById('navHome').classList.add('active');
+            document.getElementById('navMod').classList.remove('active');
+            document.getElementById('tituloFeedPrincipal').innerText = "TheLibertyPage";
+            document.getElementById('wrapperBuscaFeed').style.display = "block";
             document.getElementById('campoBusca').value = "";
             termoPesquisa = "";
+            renderizarFeed();
+        });
+
+        document.getElementById('navMod').addEventListener('click', () => {
+            visualizacaoAtual = "moderacao";
+            document.getElementById('navMod').classList.add('active');
+            document.getElementById('navHome').classList.remove('active');
+            document.getElementById('tituloFeedPrincipal').innerText = "Painel de Denúncias";
+            document.getElementById('wrapperBuscaFeed').style.display = "none";
             renderizarFeed();
         });
 
@@ -393,6 +417,14 @@
                 document.getElementById('telaFeed').style.display = 'flex';
                 document.getElementById('barraNavegacao').style.display = 'flex';
                 document.body.style.alignItems = 'flex-start';
+                
+                // Exibe o martelo de moderação apenas se o e-mail for o seu de moderação
+                if (user.email === "drwwelias@gmail.com") {
+                    document.getElementById('navMod').style.display = 'flex';
+                } else {
+                    document.getElementById('navMod').style.display = 'none';
+                }
+
                 carregarDadosIniciais();
             } else {
                 document.getElementById('telaLogin').style.display = 'block';
@@ -427,7 +459,7 @@
                     fotoUrl: fotoPostBase64,
                     curtidas: 0,
                     qtdRespostas: 0,
-                    oculto: false,
+                    denunciado: false,
                     dataCriacao: new Date()
                 });
                 document.getElementById('postTexto').value = '';
@@ -451,7 +483,7 @@
                     opcao3: op3 || null, votos3: 0,
                     curtidas: 0, 
                     qtdRespostas: 0,
-                    oculto: false,
+                    denunciado: false,
                     dataCriacao: new Date()
                 });
                 document.getElementById('enquetePergunta').value = '';
@@ -524,11 +556,33 @@
             carregarSeguidores();
         };
 
+        // Função do usuário comum denunciar conteúdo
+        window.denunciarPost = async function(idDoPost) {
+            if (confirm("Deseja mesmo reportar essa publicação para os moderadores?")) {
+                await updateDoc(doc(db, "posts", idDoPost), { denunciado: true });
+                alert("Obrigado. O post foi encaminhado para análise no painel da moderação.");
+            }
+        };
+
+        // Funções exclusivas do Moderador no Painel
+        window.modApagarPost = async function(idDoPost) {
+            if (confirm("⚠️ AVISO MESTRE: Deseja deletar em definitivo este post do banco de dados?")) {
+                await deleteDoc(doc(db, "posts", idDoPost));
+            }
+        };
+
+        window.modIgnorarDenuncia = async function(idDoPost) {
+            if (confirm("Deseja perdoar o post e retirá-lo da fila de denúncias?")) {
+                await updateDoc(doc(db, "posts", idDoPost), { denunciado: false });
+            }
+        };
+
         window.deletarProprioPost = async function(idDoPost) {
             if (confirm("Deseja apagar sua publicação?")) await deleteDoc(doc(db, "posts", idDoPost));
         };
 
         window.filtrarPorHashtag = function(tag) {
+            if(visualizacaoAtual === "moderacao") return; // impede clique no painel mod
             document.getElementById('campoBusca').value = tag;
             termoPesquisa = tag.toLowerCase();
             renderizarFeed();
@@ -594,6 +648,9 @@
                 const usuarioLogado = auth.currentUser ? auth.currentUser.email.split('@')[0] : "";
                 const ehModerador = (emailLogado === "drwwelias@gmail.com");
 
+                // Filtro macro com base na aba ativa do menu
+                if (visualizacaoAtual === "moderacao" && !ehModerador) return;
+
                 const todosSeguidores = await getDocs(collection(db, "seguidores"));
                 let contagemSeguidores = {};
                 let contagemSeguindo = {};
@@ -603,29 +660,40 @@
                     contagemSeguindo[d.seguidor] = (contagemSeguindo[d.seguidor] || 0) + 1;
                 });
 
+                let totalRenderizados = 0;
+
                 snapshot.forEach((docSnapshot) => {
                     const id = docSnapshot.id;
                     const item = docSnapshot.data();
 
-                    if (item.oculto && !ehModerador) return;
+                    // Regras da aba de Moderação
+                    if (visualizacaoAtual === "moderacao") {
+                        if (!item.denunciado) return; // Se não tá marcado como denunciado, pula
+                    } else {
+                        // Se for o Feed normal e o termo de pesquisa estiver rodando
+                        if (termoPesquisa) {
+                            const userMeta = dadosUsuariosCache[item.autorUid] || {};
+                            const nomeExibicao = userMeta.nome || item.autor || "Usuário";
+                            const descExibicao = userMeta.descricao || "Membro da rede";
+                            const noTexto = item.conteudo ? item.conteudo.toLowerCase().includes(termoPesquisa) : false;
+                            const noNome = nomeExibicao.toLowerCase().includes(termoPesquisa);
+                            const naBio = descExibicao.toLowerCase().includes(termoPesquisa);
+                            if (!noTexto && !noNome && !naBio) return;
+                        }
+                    }
+
+                    totalRenderizados++;
 
                     const tipoPost = item.tipo || 'post';
                     const userMeta = dadosUsuariosCache[item.autorUid] || {};
                     const nomeExibicao = userMeta.nome || item.autor || "Usuário";
                     const descExibicao = userMeta.descricao || "Membro da rede";
-                    
-                    if (termoPesquisa) {
-                        const noTexto = item.conteudo ? item.conteudo.toLowerCase().includes(termoPesquisa) : false;
-                        const noNome = nomeExibicao.toLowerCase().includes(termoPesquisa);
-                        const naBio = descExibicao.toLowerCase().includes(termoPesquisa);
-                        if (!noTexto && !noNome && !naBio) return;
-                    }
 
                     let avatarHtml = `<span class="avatar">${nomeExibicao[0].toUpperCase()}</span>`;
                     if (userMeta.fotoPerfil) avatarHtml = `<img src="${userMeta.fotoPerfil}" class="avatar-img">`;
 
                     let botaoFollow = "";
-                    if(auth.currentUser && item.autorUid !== auth.currentUser.uid) {
+                    if(auth.currentUser && item.autorUid !== auth.currentUser.uid && visualizacaoAtual !== "moderacao") {
                         const jaSegue = listaSeguindoCache.includes(item.autorUid);
                         botaoFollow = `<button class="btn-follow ${jaSegue ? 'following' : ''}" onclick="alternarFollow('${item.autorUid}')">${jaSegue ? 'Seguindo' : 'Seguir'}</button>`;
                     }
@@ -633,11 +701,10 @@
                     const nSeguidores = contagemSeguidores[item.autorUid] || 0;
                     const nSeguindo = contagemSeguindo[item.autorUid] || 0;
 
+                    // Botão da lixeira para o dono do post no feed normal
                     let botaoDireito = '';
-                    if (item.autor === usuarioLogado) {
+                    if (item.autor === usuarioLogado && visualizacaoAtual !== "moderacao") {
                         botaoDireito = `<button class="btn-apagar-proprio" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:16px;">delete_outline</span></button>`;
-                    } else if (ehModerador) {
-                        botaoDireito = `<button class="btn-moderador" onclick="deletarProprioPost('${id}')"><span class="material-icons" style="font-size:14px;">delete</span> Mod</button>`;
                     }
 
                     let mioloHtml = '';
@@ -649,17 +716,56 @@
                         mioloHtml = `
                             <div class="post-content" style="font-weight:600;">${formatarTexto(item.conteudo)}</div>
                             <div class="poll-box">
-                                <div class="poll-option" onclick="votarEnquete('${id}', 1)"><div class="poll-bar" style="width: ${pct(v1)}%"></div><span class="poll-text">${item.opcao1}</span><span class="poll-text">${pct(v1)}%</span></div>
-                                <div class="poll-option" onclick="votarEnquete('${id}', 2)"><div class="poll-bar" style="width: ${pct(v2)}%"></div><span class="poll-text">${item.opcao2}</span><span class="poll-text">${pct(v2)}%</span></div>
-                                ${item.opcao3 ? `<div class="poll-option" onclick="votarEnquete('${id}', 3)"><div class="poll-bar" style="width: ${pct(v3)}%"></div><span class="poll-text">${item.opcao3}</span><span class="poll-text">${pct(v3)}%</span></div>` : ''}
+                                <div class="poll-option"><div class="poll-bar" style="width: ${pct(v1)}%"></div><span class="poll-text">${item.opcao1}</span><span class="poll-text">${pct(v1)}%</span></div>
+                                <div class="poll-option"><div class="poll-bar" style="width: ${pct(v2)}%"></div><span class="poll-text">${item.opcao2}</span><span class="poll-text">${pct(v2)}%</span></div>
+                                ${item.opcao3 ? `<div class="poll-option"><div class="poll-bar" style="width: ${pct(v3)}%"></div><span class="poll-text">${item.opcao3}</span><span class="poll-text">${pct(v3)}%</span></div>` : ''}
                             </div>
                         `;
                     } else {
                         mioloHtml = `<div class="post-content"><p>${formatarTexto(item.conteudo)}</p>${item.fotoUrl ? `<img src="${item.fotoUrl}" class="post-image">` : ''}</div>`;
                     }
 
+                    // Ações normais de feed vs painel de decisão do Mod
+                    let blocoAcoesEComentarios = "";
+                    if (visualizacaoAtual === "moderacao") {
+                        blocoAcoesEComentarios = `
+                            <div class="mod-actions-area">
+                                <button class="btn-mod-delete" onclick="modApagarPost('${id}')">
+                                    <span class="material-icons" style="font-size:16px;">delete_forever</span> Deletar Post
+                                </button>
+                                <button class="btn-mod-dismiss" onclick="modIgnorarDenuncia('${id}')">
+                                    <span class="material-icons" style="font-size:16px;">verified</span> Absolver / Ignorar
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // Botão de denunciar só aparece nos posts dos OUTROS
+                        let btnReport = "";
+                        if (auth.currentUser && item.autorUid !== auth.currentUser.uid) {
+                            btnReport = `<button class="action-btn btn-denunciar" onclick="denunciarPost('${id}')"><span class="material-icons" style="font-size:18px;">report</span> Denunciar</button>`;
+                        }
+
+                        blocoAcoesEComentarios = `
+                            <div class="post-actions">
+                                <div class="action-group">
+                                    <button class="action-btn" onclick="curtirPost('${id}')"><span class="material-icons" style="font-size:18px;">thumb_up</span> (${item.curtidas || 0})</button>
+                                    <button class="action-btn" onclick="alternarComentarios('${id}')"><span class="material-icons" style="font-size:18px;">forum</span> Respostas (${item.qtdRespostas || 0})</button>
+                                </div>
+                                ${btnReport}
+                            </div>
+                            <div class="comments-section" id="box-comments-${id}">
+                                <div class="comment-input-group">
+                                    <input type="text" id="input-coment-${id}" placeholder="Escreva uma resposta...">
+                                    <button onclick="enviarComentario('${id}')">Enviar</button>
+                                </div>
+                                <div id="list-coment-${id}" style="display:flex; flex-direction:column; gap:6px; margin-top:5px;"></div>
+                            </div>
+                        `;
+                    }
+
+                    // Card montado com destaque de borda se estiver em análise
                     listaPosts.insertAdjacentHTML('beforeend', `
-                        <div class="post-card">
+                        <div class="post-card ${item.denunciado && visualizacaoAtual === 'moderacao' ? 'denunciado-alerta' : ''}">
                             <div class="post-author">
                                 ${avatarHtml}
                                 <div class="author-info">
@@ -670,22 +776,19 @@
                                 ${botaoDireito}
                             </div>
                             ${mioloHtml}
-                            <div class="post-actions">
-                                <div class="action-group">
-                                    <button class="action-btn" onclick="curtirPost('${id}')"><span class="material-icons" style="font-size:18px;">thumb_up</span> (${item.curtidas || 0})</button>
-                                    <button class="action-btn" onclick="alternarComentarios('${id}')"><span class="material-icons" style="font-size:18px;">forum</span> Respostas (${item.qtdRespostas || 0})</button>
-                                </div>
-                            </div>
-                            <div class="comments-section" id="box-comments-${id}">
-                                <div class="comment-input-group">
-                                    <input type="text" id="input-coment-${id}" placeholder="Escreva uma resposta...">
-                                    <button onclick="enviarComentario('${id}')">Enviar</button>
-                                </div>
-                                <div id="list-coment-${id}" style="display:flex; flex-direction:column; gap:6px; margin-top:5px;"></div>
-                            </div>
+                            ${blocoAcoesEComentarios}
                         </div>
                     `);
                 });
+
+                if (visualizacaoAtual === "moderacao" && totalRenderizados === 0) {
+                    listaPosts.innerHTML = `
+                        <div style="text-align:center; color:var(--text-sub); padding:40px 20px;">
+                            <span class="material-icons" style="font-size:48px; color: #10b981;">check_circle_outline</span>
+                            <p style="margin-top:10px; font-weight:500;">Limpo e tranquilo! Nenhuma publicação denunciada no momento.</p>
+                        </div>
+                    `;
+                }
             });
         }
     </script>
